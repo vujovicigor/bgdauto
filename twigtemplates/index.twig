@@ -8,9 +8,9 @@
 	    <div class="img-fill">
 	      <img src="assets/images/main_slide_01.jpg" alt="">
 	      <div class="info">
-	        <div >
-	        	<h5>ACROPOS HAS THE BEST CHOICE</h5>
-	          	<h3>Looking For Perffect <em>Car</em>?</h3>
+	        <div>
+	        	<h5>BgdAuto</h5>
+	          	<h3>Usluga <em>specijalnog transporta</em><br> motornih vozila i plovila.</h3>
           		<h6 class="secondary-button">
 	          		<a href="index.html#">Find Your Car <i class="fa fa-car"></i></a>
 	          	</h6>
@@ -25,8 +25,8 @@
 	      <img src="assets/images/main_slide_02.jpg" alt="">
 	      <div class="info">
 	        <div>
-	        	<h5>ACROPOS HAS THE BEST CHOICE</h5>
-	          	<h3>Looking For Perffect <em>Car</em>?</h3>
+	        	<h5>Specijalizovana Autošlep vozila</h5>
+	          	<h3>sa silazećom platformom <br>i hidrauličnim čekrkom</h3>
 	          	<h6 class="secondary-button">
 	          		<a href="index.html#">Find Your Car <i class="fa fa-car"></i></a>
 	          	</h6>
@@ -41,8 +41,8 @@
 	      <img src="assets/images/main_slide_03.jpg" alt="">
 	      <div class="info">
 	        <div>
-	        	<h5>ACROPOS HAS THE BEST CHOICE</h5>
-	          	<h3>Looking For Perffect <em>Car</em>?</h3>
+	        	<h5>Šlep vozilo za </h5>
+	          	<h3>kombi vozila do <em>3500 kg</em></h3>
 	          	<h6 class="secondary-button">
 	          		<a href="index.html#">Find Your Car <i class="fa fa-car"></i></a>
 	          	</h6>
@@ -60,15 +60,19 @@
 				<div class="col-md-12">
 					<div class="slider-top-features">
 						<div id="owl-top-features" class="owl-carousel owl-theme">
+
+            {% set Cars = fetch("Cars") %}
+            {% for Car in Cars %}
 							<div class="item car-item">
 								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_1.jpg" alt=""></a>
+									<a href="single_car.html"><img src="img/{{Car.Galerija_[0].slug}}" alt=""></a>
 								</div>
 								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
+									<a href="single_car.html"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
+									<span>{{ Car.Cena|number_format(0) }} eur</span>
 								</div>
 							</div>
+            {% endfor %}
 							<div class="item car-item">
 								<div class="thumb-content">
 									<a href="single_car.html"><img src="assets/images/car_item_2.jpg" alt=""></a>
@@ -266,7 +270,12 @@
 				<div class="call-to-action-content">
 					<div class="row">
 						<div class="col-md-12">
-							<p>Ramps meditation wayfarers copper mug four loko locavore <em>portland</em> leggings irony umami tumblr</p>
+							<p>
+              Naša firma ima više godina iskustva u pružanju usluga, specijalnog transporta motornih vozila i plovila.<br>
+Kada dođe do saobraćajne nezgode, kada vlasnik izgubi ključeve vozila, kao i u slučaju blokade vozila i menjača, jedini izbor je autošlep. <br>
+Pored autošlep vozila sa silazećom platformom i hidrauličnim čekrkom za automobile, u našem voznom parku se nalazi i
+šlep vozilo za kombi vozila do 3500kg. <br>Posedujemo i nekoliko kombi vozila (putničkih i teretnih) kao i teretni kamion <em>Mercedes Atego</em>.<br>
+              </p>
 							<div class="secondary-button">
 								<a href="index.html#">Take Now <i class="fa fa-shopping-cart"></i></a>
 							</div>
