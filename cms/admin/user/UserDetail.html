@@ -1,0 +1,175 @@
+<section xx class="componentSection">
+        <grid style="flex:1; overflow:auto;">
+            {{#each cols}}
+    
+            {{#if .compType=='TEXT' && .visible_details=='true'}}
+            <div col='1/1' class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <input style="width: calc(100% - 15rem)" type="text" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}}  >
+            </div>
+            {{/if}}
+    
+            {{#if .compType=='LONGTEXT' && .visible_details=='true'}}
+            <div col='1/1' class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <textarea style="width: calc(100% - 15rem)" style="min-height: 14rem;" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}}  >
+            </div>
+            {{/if}}
+            
+            {{#if (.compType=='INTEGER' || .compType=='NUMERIC') && .visible_details=='true' }}
+            <div col='1/1' class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <input style="width: calc(100% - 15rem)" type="number" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}} >
+            </div>
+            {{/if}}
+    
+            {{#if .compType=='DATE' && .visible_details=='true'}}
+            <div col='1/1' class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <input style="width: calc(100% - 15rem)" type="date" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}}  >
+            </div>
+            {{/if}}
+    
+            {{#if .compType=='COLOR' && .visible_details=='true'}}
+            <div col='1/1' class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <input style="width: 8rem" type="text" style="height:3.6rem" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}}  >
+                <input style="width: calc(100% - 23rem)" type="color" style="height:4rem" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}}  >
+            </div>
+            {{/if}}
+    
+            {{#if .compType=='MULTISELECT' && .visible_details=='true'}}
+            <div col='1/1'  class="f" xx >
+                <label class="l" xx>{{.nice_name}}</label>
+                <Selectize url="?query={{.lookup_table}}" value="{{row[.compId]}}" labelf="{{.lookup_field}}" 
+                    multiple="multiple" style="display: inline-block; width: calc(100% - 15rem)"  > 
+                </Selectize>
+            </div>
+            {{/if}}
+            
+            {{#if .compType=='IMAGE' && .visible_details=='true'}}
+            <div col='1/1'  class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <input style="width: calc(100% - 39rem); margin-right: 1rem;" type="text" title="{{.tooltip}}" placeholder="{{.placeholder}}" value={{row[.compId]}}>
+                <button id="browse" style="width: 14rem;" on-click="@this.fire('showFileBrowse', .compId)">Browse
+                </button>    
+                <img src="{{HOSTNAME}}image.php?id={{row[.compId]}}" alt="{{row[.compId]}}" style="max-width: 8rem; max-height: 6rem;">
+            </div>
+            {{/if}}
+    
+            {{#if .compType=='DROPDOWN' && .visible_details=='true'}}
+            <div col='1/1' class="f" xx>
+                <label class="l" xx>{{.nice_name}}</label>
+                <Select style="display: inline-block; width: calc(100% - 15rem)" url="?query={{.lookup_table}}" value={{row[.compId]}} labelf="{{.lookup_field}}" valuef="id" >
+                    <option disabled selected value="" >Pick</option>
+                </Select>          
+            </div>
+            {{/if}}
+    
+    
+            {{#if .compType=='CHECKBOX' && .visible_details=='true'}}
+            <div col='1/1' class="f" xx>
+                <Checkbox id="{{compId}}" checked={{row[.compId]}}></Checkbox>
+                <label for="{{compId}}">{{.nice_name}}</label>
+            </div>
+            {{/if}}
+    
+
+
+            {{/each}}
+        </grid>
+        <div xx class="buttonBar">
+            <button disabled="{{!update}}" on-click="delete">
+                <span class="glyphicon glyphicon-remove"></span> Delete User
+            </button>    
+            <button primary disabled={{loading}} style="width: 14rem;" on-click="save">
+                <span class="glyphicon {{loading?'glyphicon-refresh glyphicon-refresh-animate':'glyphicon-ok'}}"></span>
+                 Save
+            </button>    
+        </div>
+            
+    </section>
+
+    
+    <style>
+    .l{
+        width:14rem;
+    }
+    .f {
+        display: flex;
+        align-items: center;
+    }
+    .componentSection {
+        flex:1; 
+        padding-bottom:0; 
+        padding:1rem; 
+        overflow:auto; 
+        display:flex; 
+        flex-flow:column; 
+        height:100%
+    }
+    .buttonBar{
+        display:flex; 
+        justify-content: space-between; 
+        margin-top: 2rem;
+    }
+    
+    
+    </style>
+    <script>
+        component.exports = {
+        onrender: function () {
+            var self = this;
+            self.set('HOSTNAME', HOSTNAME);
+            TDetails = self;
+            if (!self.get('update')){
+                // set default values from columns definition
+                var cols = self.get('cols');
+                var row = {};
+                for(var i=0;i<cols.length;i++) {
+                    row[ cols[i].compId ] = cols[i].default_value;
+                    if (cols[i].default_value == 'now' && cols[i].compType == 'DATE')
+                        row[ cols[i].compId ] = new Date().toISOString().substr(0, 10);
+                }
+                self.set('row', row);
+            } 
+            self.focusFirstElement();
+
+            this.on('save', async function(){
+                var row = self.get('row');
+                var [resp, err] = await self.fetch2('?query='+self.get('tablename')+'&_action='+(self.get('update')?'update':'insert') , self.get('row'))
+                if (resp) {
+                    izitoast.success({ message: 'Record saved.'});
+                    if (self.parent) self.parent.fire('refresh');
+                    self.set('show', false)
+                }
+            })
+            this.on('delete', async function(){
+                var user_name  = self.get('row.user_name');
+                //if (!id) return;
+                var [resp, err] = await fetch2('?query='+self.get('tablename')+'&_action=delete', {user_name:user_name})
+                if (resp) {
+                    izitoast.success({ message: 'User deleted.'});
+                    if (self.parent) self.parent.fire('refresh');
+                    self.set('show', false)
+                }
+            })        
+    
+            
+        },        
+        data:function() {
+                return {
+                      G:{}
+                    , row:{}
+                    , tablename:'_user'
+                    , cols:[]
+                    , update:null
+                    , mapvarname:''
+                    , loading:false
+                }
+            }
+        };
+        </script>
+    
+    
+    

@@ -1,0 +1,147 @@
+<section style="flex:1; padding-bottom:0; padding:1rem; overflow:auto;display: flex; flex-flow: column; height: 100%;">
+    <grid style="flex: 1;overflow: auto;">
+        <div col="1/1" style="display: flex;align-items: center;padding-bottom: 0;">
+            <span class="subheader" xx>Company </span>
+            <span class="hr" xx></span>
+        </div>
+        <div col='1/3'>
+            <label>Name</label>
+            <input type="text" placeholder="Company name" value={{row.name}}>
+        </div>
+        <div col='1/3'>
+            <label>Subdomain</label>
+            <input type="text" placeholder="subdomain" value={{row.subdomain}}>
+        </div>
+        <div col='1/3'>    
+            <label>Users limit</label>
+            <input type="number" placeholder="users" value={{row.user_limit}}>
+        </div>
+
+        <div col="1/1" style="display: flex;align-items: center;padding-bottom: 0;">
+            <span class="subheader" xx>Contract </span>
+            <span class="hr" xx></span>
+        </div>
+        <div col='1/3'>
+            <label>Value</label>
+            <input type="number" placeholder="0" value={{in_contract_value}}>
+        </div>
+        <div col='1/3'>
+            <label>Start date</label>
+            <input type="date" placeholder="Contract start date" value={{contract_start_date}}>
+        </div>
+        <div col='1/3'>    
+            <label>End date</label>
+            <input type="date" placeholder="Contract end date" value={{contract_end_date}}>
+        </div>
+
+        
+        <div col="1/1" style="display: flex;align-items: center;padding-bottom: 0;">
+            <span class="subheader" xx>Owner </span>
+            <span class="hr" xx></span>
+        </div>
+        <div col='1/2'>            
+            <label>Firstname</label>
+            <input type="text" placeholder="firstname" value={{row.user_name}}>
+        </div>
+        <div col='1/2'>
+            <label>Lastname</label>
+            <input type="text" placeholder="lastname" value={{row.user_name}}>
+        </div>
+        <div col='1/2'>
+            <label>Email</label>
+            <input type="text" placeholder="subdomain" value={{row.email}}>
+        </div>
+        <div col='1/2'>
+            <label>Password</label>
+            <input type="password" placeholder="password" value={{in_password}}>
+        </div>
+
+
+
+        <div col="1/1" style="display: flex;align-items: center;padding-bottom: 0;">
+            <span class="subheader" xx>{{rows && rows.length>0?'':'No '}}Constructions ({{rows.length}})</span>
+            <span class="hr" xx></span>
+        </div>
+
+        {{#each rows}}
+        
+        <div col='1/1' style="display: flex; align-items: center;"> 
+            {{#if .construction_image}}
+            <img src="https://resize-service.buildcon.org/?url={{.construction_image}}&width=300" style="height: 50px; margin-right: 1rem;">  
+            {{else}}
+            <img src="https://v2dev.buildcon.org/assets/img/icons/project.svg"                    style="height: 50px; margin-right: 1rem;">  
+            {{/if}}    
+            <h4 style="margin-bottom: 0;">{{.construction_name}}
+                <br><small>{{.construction_start_date}} - {{construction_end_date}}</small>
+            </h4>
+        </div>
+        <div col='1/1'> 
+            <ol>
+                {{#each .users}}
+                <li>
+                    {{#if .profile_image}}
+                    <img src="https://resize-service.buildcon.org/?url={{.profile_image}}&width=300" style="height: 24px">  
+                    {{else}}
+                    <img src="https://v2dev.buildcon.org/assets/img/icons/sc.svg"                    style="height: 24px">  
+                    {{/if}}
+                    <b>{{.role_name}}</b>  {{.firstname}} {{.lastname}} (<a href="mailto:{{.email}}">{{email}}</a>)
+                </li>
+                {{/each}}
+            </ol>
+        </div>
+        {{/each}}
+
+    </grid>
+
+
+    <button  primary m-full style="width: 100%; margin-bottom: 0;" on-click="save">Save
+    </button>    
+
+</section>
+
+<style>
+.subheader {
+    color: #679;
+    font-size: 1.8rem;
+}    
+.hr{
+    flex: 1; background: 1px #679;height: 1px;margin-left: 0.5rem;
+}
+</style>
+<script>
+  component.exports = {
+    onrender: function () {
+        var self = this;
+        window.Company = self;
+        this.focusFirstElement();
+        //SA_constructions_list_get
+        this.observe('row.company_id', async function(n){
+            if (!n) return;
+            self.set('rows', [])
+            var [resp,err] = await fetch2('api/v2/SA_constructions_list_get', self.get('row'))
+            if (resp) self.set('rows', resp.results)
+        })
+        /*
+        this.on('refresh', async function(){
+                console.log('refreshing company details')
+                //self.set('loading', true)
+                var [resp,err] = await fetch2('api/v2/SA_constructions_list_get', self.get('row'))
+                //self.set('loading', false)
+                if (resp) self.set('rows', resp.results)
+            })
+       // this.fire('refresh')     
+       */  
+
+    },        
+    data:function() {
+            return {
+                G:null
+                , row:null
+                , rows:[]
+            }
+        }
+
+  };
+  </script>
+
+

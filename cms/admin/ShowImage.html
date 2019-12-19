@@ -1,0 +1,26 @@
+<!--
+<div style="width:100%; height:100%; background-image: url('{{HOSTNAME}}image.php?id={{imgObj.id}}'); background-repeat: no-repeat; 
+background-size: {{ cycleType[cycleId % 3] }} ; background-position: center center;" on-click="add('cycleId',1)">
+</div>
+-->
+
+<div style="text-align:center;position: relative; height:100%; padding-top: 1em;" on-click="@this.add('cycleId',1)">
+    <img src="{{HOSTNAME}}image.php?id={{imgObj.id}}" style="max-width:{{ cycleType[cycleId % 2] }};" />
+</div>
+
+<script>
+    component.exports = {
+    onrender: function () {
+        var self = this;
+        ShowImage = this;
+    },        
+    data:function() {
+        return {
+              imgObj:null
+            , HOSTNAME: HOSTNAME
+            , cycleType:['unset', '100%']
+            , cycleId:0
+        }
+    }
+};
+</script>

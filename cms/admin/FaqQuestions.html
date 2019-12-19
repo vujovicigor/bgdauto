@@ -1,0 +1,100 @@
+<section style="padding-bottom:0; padding-top:8px; display:flex; flex-flow: row; justify-content:space-between">
+        <span style="font-weight: bold">
+            Questions <tag>{{fr.length}}</tag>
+        </span>      
+        <p style="margin: 0;"><a href="https://v2dev.buildcon.org/api/v2/public_faq_en" target="_blank">Preview FAQ webpage(en)</a></p>
+        <p style="margin: 0;"><a href="https://v2dev.buildcon.org/api/v2/public_faq_sr" target="_blank">Preview FAQ webpage(sr)</a></p>
+        <button style="padding: 9px; margin: 0;" on-click="@this.set('addNewQuestion',true)" id="addNewQuestion">Create New Question</button>
+    </section>
+    
+    <section style="flex:1; padding-bottom:1rem; padding-top:0; overflow:auto">
+        <div id="testbtn" style="display:box; display:flex; height:100%; overflow:auto; flex:1">
+            <f2table style="width:100%" rows={{rows}} visible="true" headerFixedHeight={{false}} alternateColor="{{true}}" 
+                columns={{columns}} ipp="50" refresh={{refresh}} fr={{fr}} row={{row}}
+                variableRowHeight={{true}} showSearch={{true}} showPaginator={{true}} showHeaders={{true}} selectid={{selectid}} loading={{loading}} nodata={{false}} >
+            </f2table>
+        </div>
+    </section>
+    
+    <!--
+    {{#if showDetails}}
+    <modal show="{{showDetails}}" zoomFrom="{{currFilterIndex}}" cw="{{cw}}" title="Question details" 
+    class="animated fadeInRight" showOverlay="{{false}}" style="
+    height: initial;
+    width: auto;
+    left: 50%;
+    right: 0;
+    top: 5rem;
+    bottom: 0;" >
+        <FaqQuestion row={{row}} show="{{showDetails}}"></FaqQuestion>
+    </modal>
+    {{/if}}
+    -->
+
+    {{#if showDetails}}
+    <modal show="{{showDetails}}" zoomFrom="{{currFilterIndex}}" cw="{{cw}}" title="Question details" showOverlay="{{false}}" style="
+    height: 44em;
+    width: 50em;
+    left: calc(50% - 25em);
+    right: inherit;
+    top: calc(50% - 22em);
+    bottom: inherit;" >
+        <FaqQuestion row={{row}} show="{{showDetails}}"></FaqQuestion>
+    </modal>
+    {{/if}}
+       
+    {{#if addNewQuestion}}
+    <modal show="{{addNewQuestion}}" zoomFrom="addNewQuestion" cw="{{cw}}" title="Create new Question" showOverlay="{{true}}" style="
+    height: 44em;
+    width: 50em;
+    left: calc(50% - 25em);
+    right: inherit;
+    top: calc(50% - 22em);
+    bottom: inherit;" >
+        <FaqQuestion show="{{addNewQuestion}}"></FaqQuestion>
+    </modal>
+    {{/if}}
+      
+    <script>
+      component.exports = {
+        onrender: async function () {
+            var self = this;
+            this.on('refresh', async function(){
+//                console.log('refreshing categories')
+                self.set('loading', true)
+                var [resp,err] = await fetch2('api/v2/faq_questions_list_get')
+                self.set('loading', false)
+                if (resp) self.set('rows', resp.results)
+            })
+            this.fire('refresh')
+            
+            this.on('*.clickhandlerfromtable', function(e,e1,e2){
+                self.set('currFilterIndex', 'fgr'+e)
+                self.set('showDetails',true)
+            })
+        },        
+        data:function() {
+                return {
+                    G:null
+                    //, columns:null
+                    , rows:[]
+                    , refresh:0
+                    , fr:[]
+                    , loading:false
+                    , currFilterIndex:''
+                    , row:{}
+                    , addNewQuestion:false      
+  
+                     , columns: [
+                      {visible:true , filter:true, compId:"category_en", compType:"text", label:"Category", w:"10rem"},
+                      {visible:true , filter:true, compId:"question_en", compType:"text", label:"Question", w:"40%"},
+                     // {visible:true , filter:true, compId:"question_sr", compType:"text", label:"Question (Sr.)", w:"20%"},
+                      {visible:true , filter:true, compId:"answer_en", compType:"text", label:"Answer", w:"50%"},
+                    //  {visible:true , filter:true, compId:"answer_sr", compType:"text", label:"Answer (Sr.)", w:"30%"},
+                      {visible:true , filter:true, compId:"sort", compType:"number", label:"Sort", w:"4em", template:"{{Number(viewport[i][compId]).toFixed(0)}}"},
+                    ]
+
+                }
+            }
+      };
+      </script>

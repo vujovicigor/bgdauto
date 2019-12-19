@@ -1,0 +1,82 @@
+<section xx class="componentSection">
+    <grid style="flex:1; overflow:auto;">
+        <div col='1/1'>
+            <label>Schema name</label>
+            <input type="text" placeholder="ONLY LETERS AND _" value={{tablename}}>
+        </div>
+    </grid>
+    <div xx class="buttonBar">
+        <button  on-click="@this.set('show', false)">Cancel
+        </button>    
+        <button primary style="width: 14rem;" on-click="save">Save
+        </button>    
+    </div>
+            
+</section>
+
+<style>
+.componentSection {
+    flex:1; 
+    padding-bottom:0; 
+    padding:1rem; 
+    overflow:auto; 
+    display:flex; 
+    flex-flow:column; 
+    height:100%
+}
+.buttonBar{
+    display:flex; 
+    justify-content: space-between; 
+    margin-top: 2rem;
+}
+.subheader {
+    color: #679;
+    font-size: 1.8rem;
+}    
+.hr{
+    flex: 1; background: 1px #679;height: 1px;margin-left: 0.5rem;
+}
+</style>
+<script>
+    component.exports = {
+    onrender: function () {
+        var self = this;
+        this.focusFirstElement();
+        this.on('save', async function(){
+            var tablename = self.get('tablename');
+            if (!tablename) {
+                izitoast.error({ message: 'Enter schema name'}); return;
+            } 
+            if ( tablename.startsWith('sqlite_') || tablename.startsWith('_') || tablename.startsWith('transaction') || tablename.startsWith('index') ) {
+                izitoast.error({ message: 'Can not use reserved name'}); return;
+            } 
+            if (!tablename.match(/^[a-zA-Z][a-zA-Z0-9_]*$/)) {
+                izitoast.error({ message: "Schema name must have only letters,numbers and _ and can't start with number"}); return;
+            }
+            
+//            var [resp, err] = await fetch2('?query=engine_schema_new&tablename='+ tablename)
+            var [resp, err] = await fetch2('?query=_engine_schema&_action=insert&tablename='+ tablename)
+            if (resp) {
+                if (self.parent) self.parent.fire('refresh');
+                self.set('G.selectedModule', null).then(function(){
+                    self.set('G.selected_tablename', tablename);
+                    self.set('G.selectedModule', 'Schema')
+                })                
+                izitoast.info({ message: 'Great, now add some fields'});
+                self.set('show', false);
+            }
+        })
+    
+    },        
+    data:function() {
+            return {
+                G:{}
+                , tablename:''
+                , show:false
+            }
+        }
+    };
+    </script>
+    
+    
+    

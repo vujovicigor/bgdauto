@@ -1,0 +1,68 @@
+<div class="bg" on-click="@this.set('show',false)" ></div>
+<div class="dialog">
+    <table>
+        <tbody>
+            <tr>
+                <td>About</td>
+            </tr>
+            
+            <tr>
+                <td>Help</td>
+            </tr>
+            
+            <tr>
+                <td>Settings</td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+    
+    <style>
+        .bg {
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-color: rgba(99,99,99,0.5);
+            z-index: 11;
+        }
+        .dialog {
+            position:absolute;
+            right:0;
+            top:4.4rem;
+            bottom:0;
+            background-color: white;  
+            width: 26rem;
+            box-shadow: 5px 6px 5px grey;
+            z-index: 12;
+        }
+    </style>
+    <script>
+        var anime = require('animejs');
+        component.exports = {
+            onrender: function () {
+                var self = this;
+                anime({
+                    targets: '.dialog',
+                    translateX: ['26rem',0],
+                    bottom:['100%',0],
+                    opacity: [0,1],
+                    duration: 300
+                });            
+                anime({
+                    targets: '.bg',
+                    opacity: [0,1],
+                    duration: 4600
+                });                            
+            },
+            data:function(){
+                return {
+                    show:false
+                }
+            }
+        }        
+    
+    </script>
+    

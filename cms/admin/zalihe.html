@@ -1,0 +1,83 @@
+<section style="flex:1; padding-bottom:0.5rem; padding-top:0.5rem; overflow:auto">
+<div style="display:box; display:flex; height:100%; overflow:auto; flex:1; min-width: 45em;">
+    <f2table style="width:100%;" rows={{rows}} row={{row}} visible="true" close={{closeList}} headerFixedHeight={{headerFixedHeight}} alternateColor="{{alternateColor}}" 
+        serviceName="{{serviceName}}" columns={{columns}}  env={{env}} ipp="100"
+        variableRowHeight={{variableRowHeight}} showSearch={{showSearch}} showPaginator={{showPaginator}} showHeaders={{showHeaders}} selectid={{selectid}} loading={{zaliheIsLoading}} nodata={{nodata}} >
+    </f2table>
+</div>
+
+</section>
+<section style="padding-bottom:0.5rem; padding-top:0.5rem">
+<button primary m-full on-click="@this.getzalihe()" style="width: 100%;" >Last sync: {{zaliheDate}}
+    <i style="float:right" class="glyphicon {{zaliheIsLoading?'glyphicon-repeat fast-right-spinner':'glyphicon-refresh'}} "></i>
+</button>
+</section>
+
+<script>
+component.exports = {
+onrender: function () {
+    var self = this;
+    const got = require('got');
+    this.formatDate = function(date){
+        return  date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear() + ' ' + date.getHours()+':' + date.getMinutes()
+    }
+
+    setTimeout(function(){
+        var zaliheDate = localStorage.getItem("zaliheDate");
+        if (zaliheDate) {
+            var date = new Date(parseInt(zaliheDate));
+            self.set('zaliheDate', self.formatDate(date));
+            self.set('rows', cacheLocalStorage.zalihe?cacheLocalStorage.zalihe:JSON.parse(localStorage.getItem("zalihe")));
+        }
+    },1)
+
+    this.getzalihe = async function() {
+        self.set('zaliheIsLoading', true);
+        setTimeout(function(){ self.set('zaliheIsLoading', false) }, 1000)
+        try {
+            const response = await got('http://77.105.33.22:8765/zalihe', { json: true });
+//                console.log(response.body);
+            localStorage.setItem("zalihe", JSON.stringify(response.body));
+            var date= new Date();
+            var dateInt = date.getTime();
+            localStorage.setItem("zaliheDate", dateInt);
+            
+            var dateF = self.formatDate(date);
+            
+            self.set('zaliheDate', dateF);
+            self.set('zaliheIsLoading', false);
+            self.set('rows', response.body);
+        } catch (error) {
+            console.log(error);
+            self.set('zaliheIsLoading', false);
+        }
+    }    
+    this.getzalihe()
+},        
+data:function() {
+        return {
+            text: ''
+            , ur:null
+            , rows:[]
+            , row:null
+            , zaliheDate: ''
+            , zaliheIsLoading:false
+            , columns: [
+    //        {visible:true , filter:false, compId:"id", compType:"text", label:"Naziv", w:"20%", template:"<img style='height:2em' src='objengine/image.php?filename={{viewport[i][.compId]}}&h=140'>"}
+                // {visible:true , filter:true, compId:"id", compType:"text", label:"Naziv", w:"100%",
+                //  template:"<div> {{viewport[i]['id']}}</div>" },Number(77).toFixed(2)
+                {visible:true , filter:true, compId:"acName", compType:"text", label:"Naziv", w:"23%"},
+                {visible:true , filter:true, compId:"ZALIHA", compType:"number", label:"ZALIHA", w:"11%"},
+                {visible:true , filter:true, compId:"3 MONTHS", compType:"number", label:"3 M", w:"11%"},
+                {visible:true , filter:true, compId:"6 MONTHS", compType:"number", label:"6 M", w:"11%"},
+                {visible:true , filter:true, compId:"1 YEAR", compType:"number", label:"1 G", w:"11%"},
+                {visible:true , filter:true, compId:"OVERSTOCK > 3 MONTHS", compType:"number", label:"OST >3M", w:"11%"},
+                {visible:true , filter:true, compId:"OVERSTOCK > 6 MONTHS", compType:"number", label:"OST >6M", w:"11%"},
+                {visible:true , filter:true, compId:"OVERSTOCK > 1 YEAR", compType:"number", label:"OST >1G", w:"11%"},
+//                  {visible:true , filter:true, compId:"kol", compType:"number", label:"Kol", w:"12em", template:"{{Number(viewport[i][compId]).toFixed(2)}}"},
+            ]
+                        
+        }
+    }
+};
+</script>

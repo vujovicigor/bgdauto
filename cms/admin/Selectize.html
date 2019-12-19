@@ -1,0 +1,229 @@
+
+<!-- TODO: setting status onchange, groupby -->
+<select value="{{value}}"  style="{{style}}" class="{{class}}"  size="{{size}}" id="selectize" multiple="{{multiple}}" >
+    </select>
+    
+    <script>
+        component.exports ={
+            onrender: function ( options ) {
+    //        oninit: function ( options ) {
+                var self = this, url = this.get( 'url' );
+                var ss;
+                var sss;
+                var seting=false;
+                
+                var em={};
+                if (self.get('multiple')!='multiple'){
+                    em[self.get('valuef')]="-1";
+                    em[self.get('labelf')]="\u2014";
+                    self.splice('rows',0,0,em);
+                }
+                
+                var createAndApplyOptGroup=function(){
+                    var ogf= self.get('optgroupField');
+                    if (!ogf) return;
+                    //console.log('ogf',ogf);
+                    var tmpObj={};
+                    var ar=[];
+                    var lf=self.get('labelf');
+                    var vf=self.get('valuef');
+                    var rows=self.get('rows');
+    
+                    sss.clearOptionGroups();
+    
+                    rows.forEach( function (i)
+                    {
+                      if( i[ogf] && !tmpObj[i[ogf]] ) {
+                        tmpObj[i[ogf]]=true;
+                        var o={}; 
+                        o[lf]=i[ogf]; o[vf]=i[vf]; o.id=i[ogf];
+                        //o.label=i[ogf]; o.id=i[ogf]; o.value=i[ogf];
+                        
+                        //console.log('',o);
+                        //ar.push(o);
+                        sss.registerOptionGroup( $.extend( {}, o ) );
+    
+                      }
+                    });
+                    
+                }
+                
+                
+                ss=$(self.nodes.selectize).selectize({
+                                        options: self.get('rows'),
+                                        placeholder:self.get('placeholder'),
+    /*                            						optgroups: [
+                                            {id: 'dodge', name: 'Dodge'},
+                                            {id: 'audi', name: 'Audi'},
+                                            {id: 'chevrolet', name: 'Chevrolet'}
+                                        ],
+    */
+    
+                                        labelField: self.get('labelf'), //'model',
+                                        valueField: self.get('valuef'),
+                                        optgroupField: self.get('optgroupField'),
+                                        optgroupLabelField: self.get('labelf'),
+                                        optgroupValueField: self.get('valuef'),
+                //						optgroupOrder: ['chevrolet', 'dodge', 'audi'],
+                                        searchField: [self.get('labelf')]
+                //                        render: {
+                //                            optgroup_header: function(data, escape) {
+                //                                return '<div class="optgroup-header">jebotepas' + escape(data.Name) + '</div>';
+                //                            }
+                //                        }
+                                        
+                //						plugins: ['optgroup_columns']
+                                        ,onDropdownOpen: function() { //delete btn android bug https://github.com/selectize/selectize.js/issues/113
+                                              var userAgent = navigator.userAgent.toLowerCase();
+                                              var isAndroid = userAgent.indexOf("android") > -1;
+                                              if (isAndroid) {
+                                                this.clear(); // 'this' refers to selectize object
+                                              }
+                                        }                            
+                                    });
+                sss= ss[0].selectize;  
+                createAndApplyOptGroup();
+                
+                ss.on('change', function(e){
+                    //if (seting) { seting=false; console.log('block seting'); return};
+                    //console.log('selectize onchange, selectize val: ',sss.getValue(), ' self.value: ',self.get('value'));
+                    //console.log(ss)
+                    var v=sss.getValue();
+                    if(!v) return; // OVO je zbuzdeno, treba bolje
+    
+                    self.set('value',v) ;
+                    var iid = self.get('valuef') ;
+                    var obj = self.get('rows').filter(function ( obj ) { return obj[iid] == v; })[0];
+        
+                    if(obj !== undefined ) {
+                            self.set( "objselected", obj );  
+                        //	console.log('xsel');
+                            self.set('lbl', obj[self.get('labelf')]);
+                            return ;
+                    }  else 	self.set( "objselected", {} );  
+                    self.set('lbl','');
+                    
+                });
+                
+                
+    /*
+    ss=$(this.nodes.selectize).selectize({
+                            options: [
+                                {id: 'avenger', make: 'dodge', model: 'Avenger'},
+                                {id: 'caliber', make: 'dodge', model: 'Caliber'},
+                                {id: 'caravan-grand-passenger', make: 'dodge', model: 'Caravan Grand Passenger'},
+                                {id: 'challenger', make: 'dodge', model: 'Challenger'},
+                                {id: 'ram-1500', make: 'dodge', model: 'Ram 1500'},
+                                {id: 'viper', make: 'dodge', model: 'Viper'},
+                                {id: 'a3', make: 'audi', model: 'A3'},
+                                {id: 'r8', make: 'audi', model: 'R8'},
+                                {id: 'rs-4', make: 'audi', model: 'RS 4'},
+                                {id: 's4', make: 'audi', model: 'S4'},
+                                {id: 's8', make: 'audi', model: 'S8'},
+                                {id: 'tt', make: 'audi', model: 'TT'},
+                                {id: 'avalanche', make: 'chevrolet', model: 'Avalanche'},
+                                {id: 'aveo', make: 'chevrolet', model: 'Aveo'},
+                                {id: 'cobalt', make: 'chevrolet', model: 'Cobalt'},
+                                {id: 'silverado', make: 'chevrolet', model: 'Silverado'},
+                                {id: 'suburban', make: 'chevrolet', model: 'Suburban'},
+                                {id: 'tahoe', make: 'chevrolet', model: 'Tahoe'},
+                                {id: 'trail-blazer', make: 'chevrolet', model: 'TrailBlazer'},
+                            ],
+                            optgroups: [
+                                {id: 'dodge', name: 'Dodge'},
+                                {id: 'audi', name: 'Audi'},
+                                {id: 'chevrolet', name: 'Chevrolet'}
+                            ],
+                            labelField: self.get('labelf'), //'model',
+                            valueField: self.get('valuef'),
+                            optgroupField: 'make',
+                            optgroupLabelField: 'name',
+                            optgroupValueField: 'id',
+    //						optgroupOrder: ['chevrolet', 'dodge', 'audi'],
+                            searchField: ['model']
+    //						plugins: ['optgroup_columns']
+                        });
+    sss=select_city  = s[0].selectize;    		
+            //	labelf
+    */    		
+                
+                
+            //	this.observe('value', function(newValue, oldValue, keypath) {
+            //	    console.log('cb value: '+newValue);
+            //	});
+        
+                this.observe('url', async function(newValue, oldValue, keypath) {
+                //	console.log('url from:'+oldValue);
+                //	console.log('url to:'+newValue);
+                    var url=newValue;
+                    if(url && url !=''){
+                      //  $.getJSON(url ,function(data){
+                            var [resp,err] = await fetch2(url);
+                            var data = { rows: resp};
+    //    					self.set('rows', data.rows).then(function () { 
+                            // create blank value
+                             if (data && data.rows && self.get('multiple')!='multiple'){
+                                 var em={};
+                                 em[self.get('valuef')]="-1";
+                                 em[self.get('labelf')]="\u2014";
+                                 data.rows.splice(0,0,em);
+                                 //console.log(data.rows);
+                             }
+    
+    ///////////////////////////////////
+                            self.set('rows', data.rows);
+                            sss.clearOptions();
+                            sss.addOption(data.rows);
+                            sss.refreshOptions(false);
+                            createAndApplyOptGroup();
+                            valchanged();
+                            
+     //   				} );
+                 //     });//.progress(function(e) {console.log('Progress',e) });
+                    }
+                });
+        
+                var valchanged= function() {
+            //		console.log('keypath:'+keypath);
+            //		console.log('value to:'+newValue);
+                    // var c = newValue;
+                    
+                    seting=true;
+                    var c = self.get( 'value' ); 
+                    var carr = String(c).split(',');
+                    //console.log('Selectize val change:', c, carr);
+                    if (self.get('multiple')=='multiple'){ // MULTISELECT
+                        if (sss) sss.setValue(carr);
+                        return
+                    }
+                    //console.log('selectize observer value:'+c);
+                    if (sss) sss.setValue(c);
+                //	console.log(c);
+                    var iid = self.get('valuef') ;
+                    var obj = self.get('rows').filter(function ( obj ) { return obj[iid] == c; })[0];
+        
+                    if(obj !== undefined ) {
+                            self.set( "objselected", obj );  
+                        //	console.log('xsel');
+                            self.set('lbl', obj[self.get('labelf')]);
+                            return ;
+                    } else self.set( "objselected", {} );
+                    self.set('lbl','');
+                };
+                
+                this.observe('value rows', function(newValue, oldValue, keypath) {
+            //		console.log('keypath:'+keypath);
+            //		console.log('value to:'+newValue);
+                    // var c = newValue;
+                    valchanged();
+                });
+            },
+            data:function() { 
+                return { 
+                    size:1, valuef:"id", labelf:"Naziv", url:null, rows:[], lbl:'', placeholder:'Pick', multiple:''
+                }
+            }
+        }
+    </script>
+    
+    

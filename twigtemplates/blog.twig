@@ -1,0 +1,82 @@
+
+{% extends "base.twig" %}
+{% block description %}{% endblock %}
+{% block content %}
+
+	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.75s" data-wow-duration="1s">
+						<div class="row">
+							<div class="heading-content col-md-12">
+								<p><a href="index.html">Homepage</a> / <em> Blog</em> / <em> Grid</em></p>
+								<h2>Blog <em>Grids</em></h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="blog-page">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="blog-grid-post">
+						<div class="row">
+
+            {% set Posts = fetch("Post") %}
+            {% for Post in Posts %}
+							<div class="col-md-6 col-xl-4">
+								<div class="item">
+							 		<div class="thumb-content">
+										<div class="date-post">
+											<a href="post/{{Post.Slug}}">{{Post.Date|date("m.d.Y")}}</a>
+										</div>
+										<div class="thumb-inner">
+											<a href="post/{{Post.Slug}}"><img src="img/{{Post.Image}}" alt="{{Post.Title}}"></a>
+										</div>
+									</div>
+									<div class="down-content">
+										<a href="post/{{Post.Slug}}"><h4>{{Post.Title}}</h4></a>
+										<ul>
+                    <!--
+											<li><span><em>Posted by:</em><a href="blog_grid_no_sidebar.html#">Admin</a></span></li>
+                      -->
+											<li><span><em>Posted on:</em>{{Post.Date}}</span></li>
+											<li><span><em>Categories:</em><a href="blog_grid_no_sidebar.html#">Creative</a>,<a href="blog_grid_no_sidebar.html#"> Graphic</a></span></li>
+										</ul>
+										<p>{{Post.Short}}</p>
+										<div class="text-button">
+											<a href="post/{{Post.Slug}}">Nastavak <i class="fa fa-arrow-right"></i></a>
+										</div>							
+									</div>
+							  	</div>
+							</div>
+            {% endfor %}
+              <!-- paginacija
+							<div class="col-md-12">
+								<div class="page-numbers">
+									<div class="pagination-content">
+										<ul>
+											<li class="active"><a href="blog_grid_no_sidebar.html#">1</a></li>
+											<li><a href="blog_grid_no_sidebar.html#">2</a></li>
+											<li><a href="blog_grid_no_sidebar.html#">3</a></li>
+											<li><a href="blog_grid_no_sidebar.html#">4</a></li>
+											<li><a href="blog_grid_no_sidebar.html#"><i class="fa fa-angle-double-right"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+              -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

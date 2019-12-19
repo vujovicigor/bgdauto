@@ -1,0 +1,242 @@
+{% extends "base.twig" %}
+{% set slug = _GET['1'] %}
+{% set Post = fetch("Post", {id:slug})[0] %}
+{% block description %}{{Post.Description}}{% endblock %}
+{% block content %}
+
+
+	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.75s" data-wow-duration="1s">
+						<div class="row">
+							<div class="heading-content col-md-12">
+								<p><a href="index">Homepage</a> / <em> Blog</em> / <em> Single Post</em></p>
+								<h2>{{Post.Title}} <em>Post</em></h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="blog-page">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="single-post">
+						<div class="item">
+              {% if Post.Image %} 
+              <img src="img/{{Post.Image}}" alt=""> 
+              {% endif %}
+							<div class="down-content">
+								<h4>{{Post.Title}}</h4>
+								<ul>
+                <!--
+									<li><span><em>Posted by:</em><a href="single_post.html#">Admin</a></span></li>
+                -->
+									<li><span><em>Posted on:</em>{{Post.Date|date("m.d.Y")}}</span></li>
+									<li>
+                    <span>
+                      <em>Categories:</em>
+                      {% for c in Post.Category_ %}
+                        {% set PostCategoryObj = fetch("PostCategory", {id:c})[0] %}
+                        <a href="blog/{{c}}">{{PostCategoryObj.label}}</a>
+                        {{loop.last?' ':', '}}
+                      {% endfor %}                        
+                    </span>
+                    </li>
+									<li><span><em>Share on:</em><a href="single_post.html#">Facebook</a>,<a href="single_post.html#"> Twitter</a>,<a href="single_post.html#"> Linkedin</a></span></li>
+								</ul>
+								<div style="margin-top: 1rem;" >{{Post.Body | raw}} </div> 
+							</div>
+						</div>
+
+            <!--
+						<div class="comments">
+							<div class="sep-section-heading">
+								<h2>Comments <em>3</em></h2>
+							</div>
+							<div class="comments-content first-comment">
+								<img src="assets/images/user_male.jpg" alt="">
+								<div class="continue-button">
+									<a href="http://cocotemplates.com/html/acropos/single-post.html">Reply<i class="fa fa-reply"></i></a>
+								</div>
+								<h6>Robert Williams</h6>
+								<span>10/July/2015</span>
+								<p>Deep v shabby chic lo-fi cronut ethical art party Austin Truffaut Brooklyn skateboard leggings selfies. Fashion axe 3 wolf moon put a bird on it, meggings.</p>
+							</div>
+							<div class="comments-content second-comment">
+								<img src="assets/images/user_female.jpg" alt="">
+								<div class="continue-button">
+									<a href="http://cocotemplates.com/html/acropos/single-post.html">Reply<i class="fa fa-reply"></i></a>
+								</div>
+								<div class="replied-button">
+									<span>Replied<i class="fa fa-reply-all"></i></span>
+								</div>
+								<h6>Maria Morris</h6>
+								<span>11/July/2015</span>
+								<p>Deep v shabby chic lo-fi cronut ethical art party Austin Truffaut Brooklyn skateboard leggings selfies. Fashion axe 3 wolf moon put a bird on it, meggings.</p>
+							</div>
+							<div class="comments-content third-comment">
+								<img src="assets/images/user_male.jpg" alt="">
+								<div class="continue-button">
+									<a href="http://cocotemplates.com/html/acropos/single-post.html">Reply<i class="fa fa-reply"></i></a>
+								</div>
+								<h6>Patrick Smith</h6>
+								<span>14/July/2015</span>
+								<p>Deep v shabby chic lo-fi cronut ethical art party Austin Truffaut Brooklyn skateboard leggings selfies. Fashion axe 3 wolf moon put a bird on it, meggings.</p>
+							</div>
+						</div>
+						<div class="leave-comment">
+							<div class="sep-section-heading">
+								<h2>Leave <em>Comment</em></h2>
+							</div>
+							<div class="submit-comment">
+								<form id="contact_form" action="single_post.html#" method="POST" enctype="multipart/form-data">
+									<div class="row">
+										<div class=" col-md-4 col-sm-4 col-xs-6">
+											<input type="text" class="blog-search-field" name="s" placeholder="Your name..." value="">
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-6">
+											<input type="text" class="blog-search-field" name="s" placeholder="Your email..." value="">
+										</div>
+										<div class="col-md-4 col-sm-4 col-xs-12">
+											<input type="text" class="subject" name="s" placeholder="Subject..." value="">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 col-sm-12">
+											<textarea id="message" class="input" name="message" placeholder="Message..."></textarea>
+										</div>
+									</div>
+									<div class="row">
+										<div class="submit-coment col-md-12">
+											<div class="primary-button">
+												<a href="single_post.html#">Submit now</a>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+            -->
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="sidebar-widgets">
+          <!--
+						<div class="sidebar-widget">
+							<div class="search-widget">
+								<input type="text" onfocus="this.value=''" value="Type keywords...">
+							</div>
+						</div>
+            -->
+						<div class="sidebar-widget">
+							<div class="text-widget">
+								<div class="sidebar-heading">
+									<h4>BGD Auto </h4>
+								</div>
+								<p>Ovde možete naći korisne informacije u vezi kupovine auta i pomoći na putu. Ako vam se sviđaju tekstovi - podelite ih sa Vašim prijateljima na linkovima ispod.</p>
+								<ul>
+									<li><a href="single_post.html#"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="single_post.html#"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="single_post.html#"><i class="fa fa-linkedin"></i></a></li>
+									<li><a href="single_post.html#"><i class="fa fa-behance"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="sidebar-widget">
+							<div class="categories">
+								<div class="sidebar-heading">
+									<h4>Categories</h4>
+								</div>
+								<ul>
+                  {% set PostCategory = fetch("PostCategoryCount") %}
+                  {% for item in PostCategory %}
+									  <li><a href="blog/{{item.id}}">{{item.label}}({{item.total}})</a></li>
+                  {% endfor %}                  
+								</ul>
+							</div>
+						</div>
+						<div class="sidebar-widget">
+							<div class="recent-posts">
+								<div class="sidebar-heading">
+									<h4>Recent Posts</h4>
+								</div>
+								<ul>
+                  {% set Posts = fetch("Post") %}
+                  {% for Post in Posts if Post.Slug != slug %}
+									<li> 
+										<a href="post/{{Post.Slug}}">
+											<img style="object-fit: cover;" src="img/{{Post.Image}}" alt="{{Post.Title}}">
+											<h6>{{Post.Title}}</h6>
+											<span>{{Post.Date|date("d.m.Y")}}</span>
+										</a>
+									</li>
+                  {% endfor %}                  
+								</ul>
+							</div>
+						</div>
+            <!--
+						<div class="sidebar-widget">
+							<div class="archives">
+								<div class="sidebar-heading">
+									<h4>Archives</h4>
+								</div>
+								<ul>
+									<li><a href="single_post.html#">Volkswagen</a></li>
+									<li><a href="single_post.html#">Audi</a></li>
+									<li><a href="single_post.html#">Aston Martin</a></li>
+									<li><a href="single_post.html#">BMW</a></li>
+									<li><a href="single_post.html#">Mercedess</a></li>
+									<li><a href="single_post.html#">Land Rover</a></li>
+									<li><a href="single_post.html#">Jeep</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="sidebar-widget">
+							<div class="tags">
+								<div class="sidebar-heading">
+									<h4>Tags Cloud</h4>
+								</div>
+								<ul>
+									<li><a href="single_post.html#">Car</a></li>
+									<li><a href="single_post.html#">Dealer</a></li>
+									<li><a href="single_post.html#">Template</a></li>
+									<li><a href="single_post.html#">PSD</a></li>
+									<li><a href="single_post.html#">HTML5</a></li>
+									<li><a href="single_post.html#">CSS3</a></li>
+									<li><a href="single_post.html#">Wordpress</a></li>
+								</ul>
+							</div>
+						</div>
+            -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<style>
+.blog-page .single-post .item .down-content blockquote {
+    background-color: #f7f7f7;
+    display: inline-block;
+    padding: 15px 30px;
+    margin: 0px 20px;
+    font-size: 15px;
+    color: #2959ad;
+    font-family: 'georgia', serif;
+    line-height: 26px;
+    border-left: 3px solid #f4c23d;
+}
+.blog-page .single-post .item .down-content blockquote p {
+    font-size: 15px;
+    color: #2959ad;
+    font-family: 'georgia', serif;
+    line-height: 26px;
+}
+</style>  
+{% endblock %}

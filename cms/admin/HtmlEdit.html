@@ -1,0 +1,128 @@
+<div class="{{class}}" id ="summernote" style="{{style}}"></div>
+
+
+{{#if showFileBrowse}}
+<modal show="{{showFileBrowse}}" cw="{{cw}}" title="Browse" 
+class="animated fadeInRight" showOverlay="{{true}}" style="
+height: 44em;
+width: 50em;
+left: calc(50% - 25em);
+right: inherit;
+top: calc(50% - 22em);
+bottom: inherit;" >
+    <ImageBrowser path="{{pathvarname}}" show="{{showFileBrowse}}"></ImageBrowser>
+</modal>
+{{/if}}
+
+<script>
+  component.exports ={
+    onteardown: function(){
+      $(this.nodes.summernote).summernote('destroy');
+      // cleanup after summernote
+      var elements = document.getElementsByClassName('note-tooltip');
+      while(elements.length > 0){
+          elements[0].parentNode.removeChild(elements[0]);
+      }
+    }
+    ,onrender: function(){
+        var self = this;
+        var HelloButton = function (context) {
+            var ui = $.summernote.ui;
+            // create button
+            var button = ui.button({
+                contents: '<i class="note-icon-picture"/>',
+                tooltip: 'Image',
+                click: function () {
+                // invoke insertText method with 'hello' on editor module.
+                  $(self.nodes.summernote).summernote('editor.saveRange');
+                  self.set('showFileBrowse',true);
+                  //context.invoke('editor.insertText', 'Image odje');
+                }
+            });
+            return button.render();   // return button as jquery object
+        }
+        this.on('path', function(path){
+          if (!path) return;
+          $(self.nodes.summernote).summernote('editor.restoreRange');
+          $(self.nodes.summernote).summernote('editor.focus');
+          var ext = path.split('.').pop();
+          //var imgs = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
+          var imgs = ["ase","art","bmp","blp","cd5","cit","cpt","cr2","cut","dds","dib","djvu","egt","exif","gif","gpl","grf","icns","ico","iff","jng","jpeg","jpg","jfif","jp2","jps","lbm","max","miff","mng","msp","nitf","ota","pbm","pc1","pc2","pc3","pcf","pcx","pdn","pgm","PI1","PI2","PI3","pict","pct","pnm","pns","ppm","psb","psd","pdd","psp","px","pxm","pxr","qfx","raw","rle","sct","sgi","rgb","int","bw","tga","tiff","tif","vtf","xbm","xcf","xpm","3dv","amf","ai","awg","cgm","cdr","cmx","dxf","e2d","egt","eps","fs","gbr","odg","svg","stl","vrml","x3d","sxd","v2d","vnd","wmf","emf","art","xar","png","webp","jxr","hdp","wdp","cur","ecw","iff","lbm","liff","nrrd","pam","pcx","pgf","sgi","rgb","rgba","bw","int","inta","sid","ras","sun","tga"]
+          if ( imgs.includes(ext.toLowerCase()) ) 
+            $(self.nodes.summernote).summernote('insertImage', 'image.php?id='+path, path)
+          else 
+            $(self.nodes.summernote).summernote('createLink', { text: path, url: 'image.php?id='+path, isNewWindow: true });
+        })
+
+        var e = $(self.nodes.summernote).summernote({
+                //popatmouse: false,
+                addclass: {
+                    debug: false,
+                    classTags: SummerNoteSharedStyle//[{title:"Button",value:"btn btn-success"},"jumbotron", "lead","img-rounded","img-circle", "img-responsive","btn", "btn btn-success","btn btn-danger","text-muted", "text-primary", "text-warning", "text-danger", "text-success", "table-bordered", "table-responsive", "alert", "alert alert-success", "alert alert-info", "alert alert-warning", "alert alert-danger", "visible-sm", "hidden-xs", "hidden-md", "hidden-lg", "hidden-print"]
+                },
+                disableDragAndDrop: true,
+                styleWithSpan:false,
+                onCreateLink:function(linkUrl){return linkUrl},
+                toolbar: [
+                    ['style', ['style', 'addclass', 'bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],                            
+                    ['imagez', ['link','img', 'video']],
+                    ['tables', ['table', 'blockquote', 'pre']],
+                    ['codeview', ['codeview']]
+                ],
+                buttons: {
+                    img: HelloButton
+                },
+                height: 300,               
+                minHeight: null,             
+                maxHeight: '100%',
+                //dialogsInBody: true,
+                callbacks: {
+                    onBlurCodeview: function(contents, $editable) {
+                      //console.log('onBlurCodeview', contents, $editable)
+                      //$(this).html(contents);
+                    },                  
+                    // Clear all formatting of the pasted text
+                    onPaste: function (e) {
+                        var bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                        e.preventDefault();
+                        setTimeout( function(){
+                            $(self.nodes.summernote).summernote( 'insertText', bufferText );
+                        }, 10 );
+                    },                    
+                    onFocus: function(e) {  $('.note-dialog').parents().removeClass('animated');  },  //modal fix                  
+                    onChange: function (contents, $editable) {
+                      //console.log('onchange SUMMERNOTE', contents)
+                      //console.log('code: ', $(self.nodes.summernote).summernote('code'))
+                      //setTimeout(function(){ console.log('codetimeout: ', $(self.nodes.summernote).summernote('code')) }, 2000)
+                      //console.log('editable: ', $editable)
+                        self.set('fromParent',false);
+                        self.set('code',contents);
+                        self.set('fromParent',true);
+                        }
+                }
+                  
+                }); 
+        SN = e
+        this.observe('code', function(v){
+            if( self.get('fromParent') ) {
+                //e.summernote(v);
+                $(self.nodes.summernote).summernote('code', v)
+            }
+        });
+        
+    },   // data:{code:null, fromParent:true}
+
+        data:function() { 
+            return {
+                 showFileBrowse:false
+                ,pathvarname:''
+                ,code:null
+                ,fromParent:true
+             }
+        }
+}
+
+</script>

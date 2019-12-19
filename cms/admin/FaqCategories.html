@@ -1,0 +1,105 @@
+<section style="padding-bottom:0; padding-top:8px; display:flex; flex-flow: row; justify-content:space-between">
+        <span style="font-weight: bold">
+            Categories total <tag>{{fr.length}}</tag>
+        </span>      
+        <button style="padding: 9px; margin: 0;" on-click="@this.set('addNewCategory',true)" id="addNewCategory">Create New Category</button>
+    </section>
+    
+    <section style="flex:1; padding-bottom:1rem; padding-top:0; overflow:auto">
+        <div id="testbtn" style="display:box; display:flex; height:100%; overflow:auto; flex:1">
+            <f2table style="width:100%" rows={{rows}} visible="true" headerFixedHeight={{false}} alternateColor="{{true}}" 
+                columns={{columns}} ipp="50" refresh={{refresh}} fr={{fr}} row={{row}}
+                variableRowHeight={{false}} showSearch={{true}} showPaginator={{true}} showHeaders={{true}} selectid={{selectid}} loading={{loading}} nodata={{false}} >
+            </f2table>
+        </div>
+    </section>
+    
+    
+    {{#if showDetails}}
+    <modal show="{{showDetails}}" zoomFrom="{{currFilterIndex}}" cw="{{cw}}" title="Category details" 
+    class="animated fadeInRight" showOverlay="{{false}}" style="
+    height: initial;
+    width: auto;
+    left: 50%;
+    right: 0;
+    top: 5rem;
+    bottom: 0;" >
+        <FaqCategory row={{row}} show="{{showDetails}}"></FaqCategory>
+    </modal>
+    {{/if}}
+    
+    {{#if addNewCategory}}
+    <modal show="{{addNewCategory}}" zoomFrom="addNewCategory" cw="{{cw}}" title="Create new category" showOverlay="{{true}}" style="
+    height: 44em;
+    width: 50em;
+    left: calc(50% - 25em);
+    right: inherit;
+    top: calc(50% - 22em);
+    bottom: inherit;" >
+        <FaqCategory show="{{addNewCategory}}"></FaqCategory>
+    </modal>
+    {{/if}}
+    
+    
+    <script>
+      component.exports = {
+        onrender: async function () {
+            console.log('Grid onrender')
+            var self = this;
+            window.Companies = self;
+            this.on('refresh', async function(){
+                console.log('refreshing categories')
+                self.set('loading', true)
+                var [resp,err] = await fetch2('api/v2/faq_categories_list_get')
+                self.set('loading', false)
+                if (resp) self.set('rows', resp.results)
+            })
+            this.fire('refresh')
+            
+            this.on('*.clickhandlerfromtable', function(e,e1,e2){
+    //            console.log('clickhandlerfromtable',e,e1,e2)
+                self.set('currFilterIndex', 'fgr'+e)
+                self.set('showDetails',true)
+            })
+            
+    
+        },        
+        data:function() {
+                return {
+                    G:null
+                    //, columns:null
+                    , rows:[]
+                    , refresh:0
+                    , fr:[]
+                    , loading:false
+                    , currFilterIndex:''
+                    , row:{}
+                    , addNewCategory:false      
+  
+                     , columns: [
+                      {visible:true , filter:true, compId:"category_en", compType:"text", label:"Category (En.)", w:"50%"},
+                      {visible:true , filter:true, compId:"category_sr", compType:"text", label:"Category (Sr.)", w:"50%"},
+                      {visible:true , filter:true, compId:"sort", compType:"number", label:"Sort", w:"4em", template:"{{Number(viewport[i][compId]).toFixed(0)}}"},
+                      {visible:false , filter:false, compId:"category_id", compType:"text", label:"category_id", w:"16em"},
+                    ]
+
+                }
+            }
+        ,computed:{
+            construction_total:function(){
+                    var fr = this.get('fr')
+                    var l = fr.length;
+                    var tc=0;
+                    for (var i=0;i<l;i++) tc += fr[i].constructions_count;
+                    return tc
+                },
+                users_total:function(){
+                    var fr = this.get('fr')
+                    var l = fr.length;
+                    var tc=0;
+                    for (var i=0;i<l;i++) tc += fr[i].users_count;
+                    return tc
+                },
+        }
+      };
+      </script>

@@ -1,0 +1,76 @@
+<section xx class="componentSection">
+    <grid style="flex:1; overflow:auto;">
+        <div col='1/1'>
+            <label>Category name (en)</label>
+            <input type="text" placeholder="english" value={{row.category_en}}>
+        </div>
+        <div col='1/1'>
+            <label>Category name (sr)</label>
+            <input type="text" placeholder="srpski" value={{row.category_sr}}>
+        </div>
+        <div col='1/1'>    
+            <label>Display order</label>
+            <input type="number" placeholder="" value={{row.sort}}>
+        </div>
+    </grid>
+    <div xx class="buttonBar">
+        <button disabled={{row.category_id?false:true}} on-click="delete">Delete
+        </button>    
+        <button primary style="width: 14rem;" on-click="save">Save
+        </button>    
+    </div>
+            
+</section>
+
+<style>
+.componentSection {
+    flex:1; 
+    padding-bottom:0; 
+    padding:1rem; 
+    overflow:auto; 
+    display:flex; 
+    flex-flow:column; 
+    height:100%
+}
+.buttonBar{
+    display:flex; 
+    justify-content: space-between; 
+    margin-top: 2rem;
+}
+.subheader {
+    color: #679;
+    font-size: 1.8rem;
+}    
+.hr{
+    flex: 1; background: 1px #679;height: 1px;margin-left: 0.5rem;
+}
+</style>
+<script>
+  component.exports = {
+    onrender: function () {
+        var self = this;
+        this.focusFirstElement();
+        this.on('save', async function(){
+            var [resp, err] = await fetch2('api/v2/faq_category_save', self.get('row'))
+            if (resp && resp.results) {
+                if (self.parent) self.parent.fire('refresh');
+                self.set('show', false)
+            }
+        })
+        this.on('delete', async function(){
+            var [resp, err] = await fetch2('api/v2/faq_category_delete', self.get('row'))
+            if (resp && resp.results) {
+                if (self.parent) self.parent.fire('refresh');
+                self.set('show', false)
+            }
+        })        
+    },        
+    data:function() {
+            return {
+                row:{category_en:null, category_rs:null,category_id:null, sort:0}
+            }
+        }
+  };
+  </script>
+
+

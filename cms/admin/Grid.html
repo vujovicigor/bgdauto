@@ -1,0 +1,76 @@
+
+<section style="flex:1; padding-bottom:0; padding-top:0; overflow:auto">
+    <div style="display:box; display:flex; height:100%; overflow:auto; flex:1">
+        <f2table style="width:100%" rows={{rows}}  visible="true" headerFixedHeight={{true}} alternateColor="{{true}}" 
+            columns={{columns}}  ipp="50" refresh={{refresh}}
+            variableRowHeight={{false}} showSearch={{true}} showPaginator={{true}} showHeaders={{true}} selectid={{selectid}} loading={{false}} nodata={{false}} >
+        </f2table>
+    </div>
+</section>
+<section style="padding-bottom:0; padding-top:0;">
+    <button primary m-full style="width: 100%; margin-bottom: 0;" on-click="@this.fire('onModuleSelect',@this.event)">Last sync: {{timeago(ts)}}
+        <i style="float:right" class="glyphicon {{stanjeIsLoading?'glyphicon-repeat fast-right-spinner':'glyphicon-refresh'}} "></i>
+    </button>
+</section>
+
+<script>
+  component.exports = {
+onrender: function () {
+        var self = this;
+        window.Grid = self;
+        self.observe('selectedModule', function(){
+           // console.log('observe("selectedModule")')
+            setTimeout(function(){ // !!!???
+                self.add('refresh',1);
+                self.update();
+            }, 1)
+        })
+        this.on('onModuleSelect', function(e){
+            //console.log('refreshing', self.get('selectedModule'))
+            e.original.preventDefault();
+            e.original.stopPropagation();
+            socket.emit('get_rows', self.get('selectedModule'));
+            return false
+        })        
+        /*
+        var selectedModule = self.get('G.selectedModule')
+        console.log('selectedModule', selectedModule)
+        var G_rows = self.get('G.rows');
+        setTimeout(function(){
+            self.set('rows', G_rows[selectedModule] )
+            console.log('set rows to', G_rows[selectedModule])
+            //self.set('columns', [])
+        }, 1000)
+*/
+        this.formatDate = function(date){
+            return  date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear() + ' ' + date.getHours()+':' + date.getMinutes()
+        }
+
+    },        
+    data:function() {
+            return {
+                G:null
+                , columns:null
+                , rows:[]
+                , selectedModule:null
+                , refresh:0
+                /*
+                text: ''
+                , ur:null
+                , rows:[]
+                , row:null
+                , stanjeDate: ''
+                , stanjeIsLoading:false
+                , columns: [
+        //        {visible:true , filter:false, compId:"id", compType:"text", label:"Naziv", w:"20%", template:"<img style='height:2em' src='objengine/image.php?filename={{viewport[i][.compId]}}&h=140'>"}
+                   // {visible:true , filter:true, compId:"id", compType:"text", label:"Naziv", w:"100%",
+                  //  template:"<div> {{viewport[i]['id']}}</div>" },Number(77).toFixed(2)
+                  {visible:true , filter:true, compId:"id", compType:"text", label:"Naziv", w:"100%"},
+                  {visible:true , filter:true, compId:"wh", compType:"text", label:"Magacin", w:"9em"},
+                  {visible:true , filter:true, compId:"kol", compType:"number", label:"Kol", w:"12em", template:"{{Number(viewport[i][compId]).toFixed(2)}}"},
+                ]
+                 */           
+            }
+        }
+  };
+  </script>

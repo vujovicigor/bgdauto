@@ -1,0 +1,99 @@
+
+<section xx class="componentSection" >
+    <grid style="flex:1; overflow:auto;">
+        <div col='1/2'>
+            <label>Category</label>
+            <Select url="api/v2/faq_categories_list_get" value="{{row.category_id}}" labelf="category_en" valuef="category_id"> 
+                <option disabled selected value="" >Pick</option>
+            </Select>
+        </div>
+        <div col='1/2'>    
+            <label>Display order</label>
+            <input type="number" placeholder="" value={{row.sort}}>
+        </div>
+        <div col='1/2'>
+            <label>Question (en)</label>
+            <input type="text" placeholder="question" value={{row.question_en}}>
+        </div>
+        <div col='1/2'>    
+            <label>Question (sr)</label>
+            <input type="text" placeholder="pitanje" value={{row.question_sr}}>
+        </div>
+        <div col='1/1'>    
+            <label>Answer (en)</label>
+            <textarea placeholder="answer" value={{row.answer_en}}></textarea>
+        </div>
+        <div col='1/1'>    
+            <label>Answer (sr)</label>
+            <textarea placeholder="odgovor" value={{row.answer_sr}}></textarea>
+        </div>
+
+    </grid>
+    <div xx class="buttonBar">
+        <button disabled={{row.question_id?false:true}} on-click="delete">Delete
+        </button>    
+        <button  primary style="width: 14rem;" on-click="save">Save
+        </button>     
+    </div>
+</section>
+
+<style>
+.componentSection {
+    flex:1; 
+    padding-bottom:0; 
+    padding:1rem; 
+    overflow:auto; 
+    display:flex; 
+    flex-flow:column; 
+    height:100%
+}
+.buttonBar{
+    display:flex; 
+    justify-content: space-between; 
+    margin-top: 2rem;
+}
+.subheader {
+    color: #679;
+    font-size: 1.8rem;
+}    
+.hr{
+    flex: 1; background: 1px #679;height: 1px;margin-left: 0.5rem;
+}
+</style>
+<script>
+  component.exports = {
+    onrender: function () {
+        var self = this;
+        this.focusFirstElement();
+        this.on('save', async function(){
+            var o = self.get('row')
+            var [resp, err] = await fetch2('api/v2/faq_question_save', o)
+            //self.set('loading', false)
+            if (resp && resp.results) {
+                //self.set('row', resp.results[0])
+                if (self.parent) self.parent.fire('refresh');
+                self.set('show', false)
+            }
+        })
+        this.on('delete', async function(){
+            var o = self.get('row')
+            var [resp, err] = await fetch2('api/v2/faq_question_delete', o)
+            //self.set('loading', false)
+            if (resp && resp.results) {
+                //self.set('row', resp.results[0])
+                if (self.parent) self.parent.fire('refresh');
+                self.set('show', false)
+            }
+        })        
+    },        
+    data:function() {
+            return {
+                //G:null,
+                row:{category_id:null, sort:0, answer_en:null, answer_sr:null, question_en:null, question_sr:null, question_id:null}
+            }
+        }
+
+  };
+  </script>
+
+
