@@ -7,7 +7,7 @@
   <base href="{{_BASE}}">
   <meta charset="UTF-8">
   <meta name="description" content="{% block description %}{% endblock %}"/>
-  <meta name="keywords" content="{% block keywords %}{% endblock %}">
+  <meta name="keywords" content="Auto slep beograd prodaja auta {% block keywords %}{% endblock %}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>BGD Auto - {% block title %}{% endblock %}</title>
@@ -54,12 +54,14 @@
 	<header class="site-header wow fadeIn" data-wow-duration="1s">
 		<div id="main-header" class="main-header">
 			<div class="container clearfix">
-				<div class="logo">
-					<a href="index"></a>
-				</div>
+				<a class="logo" href="index">
+					
+				</a>
 				<div id='cssmenu'>
 					<ul>
+<!--
 					   	<li><a href='index'>Homepage</a></li>
+-->
 					   	<li class='active'><a href='prodaja_vozila'>Prodaja vozila</a>
 					      	<ul>
                   {% set Cars = fetch("Cars") %}
@@ -70,7 +72,7 @@
 					   	</li>
 
                
-					   	<li class='active'><a href='blog'>Blog</a>
+					   	<li class='active'><a href='blog'>Korisne informacije</a>
 					      	<ul>
                     {% set Posts = fetch("Post") %}
                     {% for Post in Posts %}                  
@@ -100,8 +102,8 @@
 					      	</ul>		
 					   </li>
 -->
-					   <li><a href='about_us'>About Us</a></li>
-					   <li><a href='contact_us'>Contact Us</a></li>
+					   <li><a href='about_us'>O Nama</a></li>
+					   <li><a href='contact_us'>Kontakt</a></li>
              <!--
 					   <li>
 					   		<a href="index.html#search"><i class="fa fa-search"></i></a>

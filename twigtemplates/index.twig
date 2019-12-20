@@ -255,151 +255,41 @@ Pored autošlep vozila sa silazećom platformom i hidrauličnim čekrkom za auto
 									<i class="fa fa-car"></i>
 								</div>
 								<div class="text-content">
-									<h2>Recent Cars</h2>
-									<span>Check our recent posts</span>
+									<h2>Najanovija vozila</h2>
+									<span>u ponudi</span>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="row">
+
+            {% set Cars = fetch("Cars") %}
+            {% for Car in Cars %}          
 						<div class="col-md-4 col-sm-6">
 							<div class="car-item wow fadeIn" data-wow-duration="0.75s">
 								<div class="thumb-content">
 									<div class="car-banner">
-										<a href="single_car.html">For Rent</a>
+										<a href="vehicle/{{Car.id}}">Prodaja</a>
 									</div>
 									<div class="thumb-inner">
-										<a href="single_car.html"><img src="assets/images/car_item_1.jpg" alt=""></a>
+										<a href="vehicle/{{Car.id}}"><img src="img/{{Car.Galerija_[0].slug}}" alt="{{Car.Model}}"></a>
 									</div>
 								</div>
 								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$1.200</span>
-									<p>Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.</p>
+									<a href="vehicle/{{Car.id}}"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
+									<span>{{ Car.Cena|number_format(0) }} eur</span>
+									<p style="white-space: pre-wrap;">{{Car.Opis}}</p>
 									<ul class="car-info">
-										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2018</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
+										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>{{ Car.Godiste }}</p></div></li>
+										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>{{ Car.Karoserija_label }}</p></div></li>
+										<li><div class="item"><i class="flaticon flaticon-road"></i><p>{{ Car.Kilometraza }} km</p></div></li>
+										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>{{ Car.Gorivo }}</p></div></li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="car-item wow fadeIn" data-wow-duration="0.75s">
-								<div class="thumb-content">
-									<div class="car-banner">
-										<a href="single_car.html">For Sale</a>
-									</div>
-									<div class="thumb-inner">
-										<a href="single_car.html"><img src="assets/images/car_item_2.jpg" alt=""></a>
-									</div>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$49.950</span>
-									<p>Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.</p>
-									<ul class="car-info">
-										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2018</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="car-item wow fadeIn" data-wow-duration="0.75s">
-								<div class="thumb-content">
-									<div class="car-banner">
-										<a href="single_car.html">For Rent</a>
-									</div>
-									<div class="thumb-inner">
-										<a href="single_car.html"><img src="assets/images/car_item_3.jpg" alt=""></a>
-									</div>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$1.500</span>
-									<p>Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.</p>
-									<ul class="car-info">
-										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2018</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="car-item wow fadeIn" data-wow-duration="0.75s">
-								<div class="thumb-content">
-									<div class="car-banner">
-										<a href="single_car.html">For Rent</a>
-									</div>
-									<div class="thumb-inner">
-										<a href="single_car.html"><img src="assets/images/car_item_4.jpg" alt=""></a>
-									</div>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$1.550</span>
-									<p>Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.</p>
-									<ul class="car-info">
-										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2018</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="car-item wow fadeIn" data-wow-duration="0.75s">
-								<div class="thumb-content">
-									<div class="car-banner">
-										<a href="single_car.html">For Sale</a>
-									</div>
-									<div class="thumb-inner">
-										<a href="single_car.html"><img src="assets/images/car_item_5.jpg" alt=""></a>
-									</div>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$30.000</span>
-									<p>Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.</p>
-									<ul class="car-info">
-										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2018</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4 col-sm-6">
-							<div class="car-item wow fadeIn" data-wow-duration="0.75s">
-								<div class="thumb-content">
-									<div class="car-banner">
-										<a href="single_car.html">For Rent</a>
-									</div>
-									<div class="thumb-inner">
-										<a href="single_car.html"><img src="assets/images/car_item_6.jpg" alt=""></a>
-									</div>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$1.500</span>
-									<p>Leggings edison bulb hexagon, hashtag coloring book ethical echo park austin fam succulents.</p>
-									<ul class="car-info">
-										<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2018</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-										<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-									</ul>
-								</div>
-							</div>
-						</div>
+            {% endfor %}
+
 					</div>
 				</div>
 			</div>
