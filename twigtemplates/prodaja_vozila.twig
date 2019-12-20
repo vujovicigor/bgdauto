@@ -32,7 +32,7 @@
             {% for Car in Cars %}
 
 
-							<div class="col-md-4">
+							<div class="col-md-6">
 								<div class="car-item">
 									<div class="thumb-content">
 										<div class="car-banner">
@@ -46,7 +46,7 @@
 										<a href="vozilo/{{Car.id}}"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
 										<span>{{ Car.Cena|number_format(0) }} eur</span>
 										<div class="line-dec"></div>
-										<p>Drinking vinegar hoodie street art, selvage you probably haven't heard of them put a bird on it semiotics heirloom four loko roof party mumblecore cliche butcher meditation.</p>
+										<p style="white-space: pre-wrap;">{{Car.Opis}}</p>
 										<ul class="car-info">
 											<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>{{ Car.Godiste }}</p></div></li>
 											<li><div class="item"><i class="flaticon flaticon-speed"></i><p>{{ Car.Karoserija_label }}</p></div></li>
@@ -58,126 +58,7 @@
 							</div>
 
               {% endfor %}
-							<div class="col-md-4">
-								<div class="car-item">
-									<div class="thumb-content">
-										<div class="car-banner">
-											<a href="single_car.html">For Sale</a>
-										</div>
-										<div class="thumb-inner">
-											<a href="single_car.html"><img src="assets/images/car_item_2.jpg" alt=""></a>
-										</div>
-									</div>
-									<div class="down-content">
-										<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-										<span>$49.000</span>
-										<div class="line-dec"></div>
-										<p>Drinking vinegar hoodie street art, selvage you probably haven't heard of them put a bird on it semiotics heirloom four loko roof party mumblecore cliche butcher meditation.</p>
-										<ul class="car-info">
-											<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2013</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="car-item">
-									<div class="thumb-content">
-										<div class="car-banner">
-											<a href="single_car.html">For Rent</a>
-										</div>
-										<div class="thumb-inner">
-											<a href="single_car.html"><img src="assets/images/car_item_3.jpg" alt=""></a>
-										</div>
-									</div>
-									<div class="down-content">
-										<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-										<span>$42.000</span>
-										<div class="line-dec"></div>
-										<p>Drinking vinegar hoodie street art, selvage you probably haven't heard of them put a bird on it semiotics heirloom four loko roof party mumblecore cliche butcher meditation.</p>
-										<ul class="car-info">
-											<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2013</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="car-item">
-									<div class="thumb-content">
-										<div class="car-banner">
-											<a href="single_car.html">For Rent</a>
-										</div>
-										<div class="thumb-inner">
-											<a href="single_car.html"><img src="assets/images/car_item_4.jpg" alt=""></a>
-										</div>
-									</div>
-									<div class="down-content">
-										<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-										<span>$54.000</span>
-										<div class="line-dec"></div>
-										<p>Drinking vinegar hoodie street art, selvage you probably haven't heard of them put a bird on it semiotics heirloom four loko roof party mumblecore cliche butcher meditation.</p>
-										<ul class="car-info">
-											<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2013</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="car-item">
-									<div class="thumb-content">
-										<div class="car-banner">
-											<a href="single_car.html">For Sale</a>
-										</div>
-										<div class="thumb-inner">
-											<a href="single_car.html"><img src="assets/images/car_item_5.jpg" alt=""></a>
-										</div>
-									</div>
-									<div class="down-content">
-										<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-										<span>$23.000</span>
-										<div class="line-dec"></div>
-										<p>Drinking vinegar hoodie street art, selvage you probably haven't heard of them put a bird on it semiotics heirloom four loko roof party mumblecore cliche butcher meditation.</p>
-										<ul class="car-info">
-											<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2013</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="car-item">
-									<div class="thumb-content">
-										<div class="car-banner">
-											<a href="single_car.html">For Rent</a>
-										</div>
-										<div class="thumb-inner">
-											<a href="single_car.html"><img src="assets/images/car_item_6.jpg" alt=""></a>
-										</div>
-									</div>
-									<div class="down-content">
-										<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-										<span>$68.000</span>
-										<div class="line-dec"></div>
-										<p>Drinking vinegar hoodie street art, selvage you probably haven't heard of them put a bird on it semiotics heirloom four loko roof party mumblecore cliche butcher meditation.</p>
-										<ul class="car-info">
-											<li><div class="item"><i class="flaticon flaticon-calendar"></i><p>2013</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-speed"></i><p>160p/h</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-road"></i><p>26.00km</p></div></li>
-											<li><div class="item"><i class="flaticon flaticon-fuel"></i><p>Petrol</p></div></li>
-										</ul>
-									</div>
-								</div>
-							</div>
+              <!--
 							<div class="col-md-12">
 								<div class="page-numbers">
 									<div class="pagination-content">
@@ -191,6 +72,7 @@
 									</div>
 								</div>
 							</div>
+              -->
 						</div>
 					</div>
 				</div>

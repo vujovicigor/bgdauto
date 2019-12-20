@@ -3,6 +3,24 @@
 {% block content %}
 
 	<div class="Modern-Slider">
+
+  	  <!-- Slide 0 -->
+	  <div class="item">
+	    <div class="img-fill">
+	      <img src="assets/images/main_slide_02.jpg" alt="">
+	      <div class="info">
+	        <div>
+	        	<h5>Prodaja vozila iz uvoza</h5>
+	          	<h3>po <em>najpovoljnijim</em> cenama</h3>
+	          	<h6 class="secondary-button">
+	          		<a href="prodaja_vozila">Izaberite Vaš Novi auto <i class="fa fa-car"></i></a>
+	          	</h6>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  <!-- // Slide 0 -->
+
 	  <!-- Slide 1 -->
 	  <div class="item">
 	    <div class="img-fill">
@@ -11,9 +29,11 @@
 	        <div>
 	        	<h5>BgdAuto</h5>
 	          	<h3>Usluga <em>specijalnog transporta</em><br> motornih vozila i plovila.</h3>
+<!--
           		<h6 class="secondary-button">
 	          		<a href="index.html#">Find Your Car <i class="fa fa-car"></i></a>
 	          	</h6>
+-->
 	        </div>
 	      </div>
 	    </div>
@@ -27,9 +47,11 @@
 	        <div>
 	        	<h5>Specijalizovana Autošlep vozila</h5>
 	          	<h3>sa silazećom platformom <br>i hidrauličnim čekrkom</h3>
+<!--
 	          	<h6 class="secondary-button">
 	          		<a href="index.html#">Find Your Car <i class="fa fa-car"></i></a>
 	          	</h6>
+-->
 	        </div>
 	      </div>
 	    </div>
@@ -43,9 +65,6 @@
 	        <div>
 	        	<h5>Šlep vozilo za </h5>
 	          	<h3>kombi vozila do <em>3500 kg</em></h3>
-	          	<h6 class="secondary-button">
-	          		<a href="index.html#">Find Your Car <i class="fa fa-car"></i></a>
-	          	</h6>
 	        </div>
 	      </div>
 	    </div>
@@ -65,77 +84,15 @@
             {% for Car in Cars %}
 							<div class="item car-item">
 								<div class="thumb-content">
-									<a href="single_car.html"><img src="img/{{Car.Galerija_[0].slug}}" alt=""></a>
+									<a href="vehicle/{{Car.id}}"><img src="img/{{Car.Galerija_[0].slug}}" alt=""></a>
 								</div>
 								<div class="down-content">
-									<a href="single_car.html"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
+									<a href="vehicle/{{Car.id}}"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
 									<span>{{ Car.Cena|number_format(0) }} eur</span>
 								</div>
 							</div>
             {% endfor %}
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_2.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_3.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_4.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_5.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_6.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_1.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
-							<div class="item car-item">
-								<div class="thumb-content">
-									<a href="single_car.html"><img src="assets/images/car_item_2.jpg" alt=""></a>
-								</div>
-								<div class="down-content">
-									<a href="single_car.html"><h4>Perfect Sport Car</h4></a>
-									<span>$36.000</span>
-								</div>
-							</div>
+
 						</div>
 					</div>
 				</div>

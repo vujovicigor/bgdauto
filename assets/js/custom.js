@@ -59,7 +59,8 @@ $(document).ready(function() {
       pagination : false,
       paginationNumbers: false,
       autoplay: true,
-      loop:true,
+      loop:false,
+      rewind: true,
       margin:10,
       nav:true,
       responsive:{
@@ -86,7 +87,8 @@ $(document).ready(function() {
       pagination : true,
       paginationNumbers: false,
       autoplay: true,
-      loop:true,
+      loop:false,
+      rewind: true,
       margin:10,
       nav:true,
       responsive:{
@@ -107,7 +109,8 @@ $(document).ready(function() {
       pagination : true,
       paginationNumbers: false,
       autoplay: true,
-      loop:true,
+      loop:false,
+      rewind: true,
       margin:10,
       nav:true,
       responsive:{
@@ -128,7 +131,8 @@ $(document).ready(function() {
       pagination : true,
       paginationNumbers: false,
       autoplay: true,
-      loop:true,
+      loop:false,
+      rewind: true,
       margin:10,
       nav:true,
       responsive:{
