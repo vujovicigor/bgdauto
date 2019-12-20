@@ -1,12 +1,13 @@
 RewriteEngine On
 Options +FollowSymLinks
+DirectoryIndex cms/twig.php
 
 # force https
 #RewriteCond %{HTTPS} off
 #RewriteCond %{HTTP_HOST} !localhost
 #ewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-RewriteRule ^index.php$ cms/twig.php?twig_file_name=index [L]
+RewriteRule ^index$ cms/twig.php?twig_file_name=index [L]
 
 RewriteRule ^img/(.*)$ cms/image.php?id=$1 
 
