@@ -1,6 +1,15 @@
-
 {% extends "base.twig" %}
-{% block description %}{% endblock %}
+{% set selected_category_slug = _GET['1'] %}
+{% set PostCategory = fetch("PostCategory", {id:selected_category_slug})[0] %}
+{% set selected_category_id = selected_category_slug?PostCategory.id:null  %}
+
+{% block description %}
+{% if selected_category_id%}Korisne informacije, Kategorija: {{PostCategory.label}}{% else %}Korisne Informacije{% endif %}
+{% endblock %}
+{% block title %}
+{% if selected_category_id%}{{PostCategory.label}}{% else %}Korisne Informacije{% endif %}
+{% endblock %}
+
 {% block content %}
 
 	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
@@ -10,8 +19,13 @@
 					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.25s" data-wow-duration="1s">
 						<div class="row">
 							<div class="heading-content col-md-12">
-								<p><a href="index.html">Homepage</a></p>
+              {% if selected_category_id%}
+								<p><a href="index">Homepage</a> / <em> <a href="blog">Korisne informacije</a></em> </p>
+								<h2>Kategorija: <em>{{PostCategory.label}}</em></h2>
+              {% else %}
+								<p><a href="index">Homepage</a></p>
 								<h2>Korisne <em>Informacije</em></h2>
+              {% endif %}
 							</div>
 						</div>
 					</div>
@@ -28,7 +42,7 @@
 						<div class="row">
 
             {% set Posts = fetch("Post") %}
-            {% for Post in Posts %}
+            {% for Post in Posts if not(selected_category_id) or selected_category_id in Post.Category_ %}
 							<div class="col-md-6 col-xl-4">
 								<div class="item">
 							 		<div class="thumb-content">
@@ -51,7 +65,7 @@
 
                       {% for c in Post.Category_ %}
                         {% set PostCategoryObj = fetch("PostCategory", {id:c})[0] %}
-                        <a href="blog/{{c}}">{{PostCategoryObj.label}}</a>{{loop.last?' ':', '}}
+                        <a href="blog/{{PostCategoryObj.Slug}}">{{PostCategoryObj.label}}</a>{{loop.last?' ':', '}}
                       {% endfor %}   
                       </span></li>
 										</ul>
@@ -63,7 +77,7 @@
 							  	</div>
 							</div>
             {% endfor %}
-              <!-- paginacija
+              {# paginacija
 							<div class="col-md-12">
 								<div class="page-numbers">
 									<div class="pagination-content">
@@ -77,7 +91,7 @@
 									</div>
 								</div>
 							</div>
-              -->
+              #}
 						</div>
 					</div>
 				</div>

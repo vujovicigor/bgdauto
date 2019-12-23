@@ -2,6 +2,7 @@
 {% set slug = _GET['1'] %}
 {% set Post = fetch("Post", {id:slug})[0] %}
 {% block description %}{{Post.Description}}{% endblock %}
+{% block title %}{{Post.Title}}{% endblock %}
 {% set url = (_BASE ~ _GET[0] ~ '/' ~ _GET[1] | url_encode) %}
 
 {% block content %}
@@ -45,7 +46,7 @@
                       <em>Kategorije:</em>
                       {% for c in Post.Category_ %}
                         {% set PostCategoryObj = fetch("PostCategory", {id:c})[0] %}
-                        <a href="blog/{{c}}">{{PostCategoryObj.label}}</a>
+                        <a href="blog/{{PostCategoryObj.Slug}}">{{PostCategoryObj.label}}</a>
                         {{loop.last?' ':', '}}
                       {% endfor %}                        
                     </span>
@@ -161,7 +162,7 @@
 								<ul>
                   {% set PostCategory = fetch("PostCategoryCount") %}
                   {% for item in PostCategory %}
-									  <li><a href="blog/{{item.id}}">{{item.label}}({{item.total}})</a></li>
+									  <li><a href="blog/{{item.Slug}}">{{item.label}}({{item.total}})</a></li>
                   {% endfor %}                  
 								</ul>
 							</div>
