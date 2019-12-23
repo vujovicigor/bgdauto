@@ -37,9 +37,9 @@
 							<div class="down-content">
 								<h4>{{Post.Title}}</h4>
 								<ul>
-                <!--
+                {#
 									<li><span><em>Posted by:</em><a href="single_post.html#">Admin</a></span></li>
-                -->
+                #}
 									<li><span><em>Posted on:</em>{{Post.Date|date("m.d.Y")}}</span></li>
 									<li>
                     <span>
@@ -60,7 +60,7 @@
 							</div>
 						</div>
 
-            <!--
+            {#
 						<div class="comments">
 							<div class="sep-section-heading">
 								<h2>Comments <em>3</em></h2>
@@ -128,18 +128,18 @@
 								</form>
 							</div>
 						</div>
-            -->
+            #}
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="sidebar-widgets">
-          <!--
+          {#
 						<div class="sidebar-widget">
 							<div class="search-widget">
 								<input type="text" onfocus="this.value=''" value="Type keywords...">
 							</div>
 						</div>
-            -->
+            #}
 						<div class="sidebar-widget">
 							<div class="text-widget">
 								<div class="sidebar-heading">
@@ -160,10 +160,10 @@
 									<h4>Kategorije</h4>
 								</div>
 								<ul>
-                  {% set PostCategory = fetch("PostCategoryCount") %}
-                  {% for item in PostCategory %}
-									  <li><a href="blog/{{item.Slug}}">{{item.label}}({{item.total}})</a></li>
-                  {% endfor %}                  
+{% set PostCategory = fetch("PostCategoryCount") %}
+{% for item in PostCategory %}
+									  <li><a href="blog/{{item.Slug}}">{{item.label}} ({{item.total}})</a></li>
+{% endfor %}                  
 								</ul>
 							</div>
 						</div>
@@ -173,8 +173,8 @@
 									<h4>Najnoviji tekstovi</h4>
 								</div>
 								<ul>
-                  {% set Posts = fetch("Post") %}
-                  {% for Post in Posts if Post.Slug != slug %}
+{% set Posts = fetch("Post") %}
+{% for Post in Posts if Post.Slug != slug %}
 									<li> 
 										<a href="post/{{Post.Slug}}">
 											<img style="object-fit: cover;" src="img/{{Post.Image}}" alt="{{Post.Title}}">
@@ -182,11 +182,11 @@
 											<span>{{Post.Date|date("d.m.Y")}}</span>
 										</a>
 									</li>
-                  {% endfor %}                  
+{% endfor %}                  
 								</ul>
 							</div>
 						</div>
-            <!--
+{#
 						<div class="sidebar-widget">
 							<div class="archives">
 								<div class="sidebar-heading">
@@ -219,7 +219,7 @@
 								</ul>
 							</div>
 						</div>
-            -->
+#}
 					</div>
 				</div>
 			</div>

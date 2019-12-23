@@ -2,6 +2,7 @@
 {% set slug = _GET['1'] %}
 {% set Post = fetch("Post", {id:slug})[0] %}
 {% block description %}{{Post.Description}}{% endblock %}
+{% block title %}Prodaja vozila{% endblock %}
 {% block content %}
 
 	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
@@ -11,7 +12,7 @@
 					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.75s" data-wow-duration="1s">
 						<div class="row">
 							<div class="heading-content col-md-12">
-								<p><a href="index.html">Homepage</a> / <em> Cars</em> / <em> Listing</em></p>
+								<p><a href="index">Homepage</a></p>
 								<h2>Prodaja <em>Vozila</em></h2>
 							</div>
 						</div>

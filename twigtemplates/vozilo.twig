@@ -1,7 +1,9 @@
 {% extends "base.twig" %}
 {% set slug = _GET['1'] %}
 {% set Car = fetch("Cars", {id:slug})[0] %}
-{% block description %}{{Car.Marka}} {{Car.Model}}{% endblock %}
+{% block description %}{{Car.Marka}} {{Car.Model}} Prodaja Vozila{% endblock %}
+{% block title %}Prodajem {{Car.Marka}} {{Car.Model}}{% endblock %}
+
 {% block content %}
 
 	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
@@ -11,7 +13,7 @@
 					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.75s" data-wow-duration="1s">
 						<div class="row">
 							<div class="heading-content col-md-12">
-								<p><a href="index.html">Homepage</a> / <em> Vozila</em> / <em> Detalji</em></p>
+								<p><a href="index.html">Homepage</a> / <em> Prodaja Vozila</em> / <em> Detalji</em></p>
 								<h2>{{Car.Marka}}  <em>{{Car.Model}}</em></h2>
 							</div>
 						</div>
