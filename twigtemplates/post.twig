@@ -2,6 +2,8 @@
 {% set slug = _GET['1'] %}
 {% set Post = fetch("Post", {id:slug})[0] %}
 {% block description %}{{Post.Description}}{% endblock %}
+{% set url = (_BASE ~ _GET[0] ~ '/' ~ _GET[1] | url_encode) %}
+
 {% block content %}
 
 
@@ -9,11 +11,11 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.75s" data-wow-duration="1s">
+					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.25s" data-wow-duration="1s">
 						<div class="row">
 							<div class="heading-content col-md-12">
-								<p><a href="index">Homepage</a> / <em> Blog</em> / <em> Single Post</em></p>
-								<h2>{{Post.Title}} <em>Post</em></h2>
+								<p><a href="index">Homepage</a> / <em> <a href="blog">Korisne informacije</a></em> </p> 
+								<h2><em>{{Post.Title}}</em> </h2>
 							</div>
 						</div>
 					</div>
@@ -40,7 +42,7 @@
 									<li><span><em>Posted on:</em>{{Post.Date|date("m.d.Y")}}</span></li>
 									<li>
                     <span>
-                      <em>Categories:</em>
+                      <em>Kategorije:</em>
                       {% for c in Post.Category_ %}
                         {% set PostCategoryObj = fetch("PostCategory", {id:c})[0] %}
                         <a href="blog/{{c}}">{{PostCategoryObj.label}}</a>
@@ -48,7 +50,10 @@
                       {% endfor %}                        
                     </span>
                     </li>
-									<li><span><em>Share on:</em><a href="single_post.html#">Facebook</a>,<a href="single_post.html#"> Twitter</a>,<a href="single_post.html#"> Linkedin</a></span></li>
+									<li><span><em>Podeli preko:</em>
+                  <a href="https://www.facebook.com/sharer.php?u={{url}}" target="_blank">Facebook</a>,
+                  <a href="https://twitter.com/intent/tweet?url={{url}}&amp;text={{Post.Title | url_encode}}" target="_blank"> Twitter</a>,
+                  <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url}}&amp;title={{Post.Title | url_encode}}" target="_blank"> Linkedin</a></span></li>
 								</ul>
 								<div style="margin-top: 1rem;" >{{Post.Body | raw}} </div> 
 							</div>
@@ -141,17 +146,17 @@
 								</div>
 								<p>Ovde možete naći korisne informacije u vezi kupovine auta i pomoći na putu. Ako vam se sviđaju tekstovi - podelite ih sa Vašim prijateljima na linkovima ispod.</p>
 								<ul>
-									<li><a href="single_post.html#"><i class="fa fa-facebook"></i></a></li>
-									<li><a href="single_post.html#"><i class="fa fa-twitter"></i></a></li>
-									<li><a href="single_post.html#"><i class="fa fa-linkedin"></i></a></li>
-									<li><a href="single_post.html#"><i class="fa fa-behance"></i></a></li>
+									<li><a href="https://www.facebook.com/sharer.php?u={{url}}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="https://twitter.com/intent/tweet?url={{url}}&amp;text={{Post.Title | url_encode}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+									<li><a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{url}}&amp;title={{Post.Title | url_encode}}" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+<!--									<li><a href="single_post.html#"><i class="fa fa-behance"></i></a></li> -->
 								</ul>
 							</div>
 						</div>
 						<div class="sidebar-widget">
 							<div class="categories">
 								<div class="sidebar-heading">
-									<h4>Categories</h4>
+									<h4>Kategorije</h4>
 								</div>
 								<ul>
                   {% set PostCategory = fetch("PostCategoryCount") %}
@@ -164,7 +169,7 @@
 						<div class="sidebar-widget">
 							<div class="recent-posts">
 								<div class="sidebar-heading">
-									<h4>Recent Posts</h4>
+									<h4>Najnoviji tekstovi</h4>
 								</div>
 								<ul>
                   {% set Posts = fetch("Post") %}

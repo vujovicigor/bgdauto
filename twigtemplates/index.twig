@@ -84,10 +84,10 @@
             {% for Car in Cars %}
 							<div class="item car-item">
 								<div class="thumb-content">
-									<a href="vehicle/{{Car.id}}"><img src="img/{{Car.Galerija_[0].slug}}" alt=""></a>
+									<a href="vozilo/{{Car.id}}"><img src="img/{{Car.Galerija_[0].slug}}" alt=""></a>
 								</div>
 								<div class="down-content">
-									<a href="vehicle/{{Car.id}}"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
+									<a href="vozilo/{{Car.id}}"><h4>{{Car.Marka}} {{Car.Model}}</h4></a>
 									<span>{{ Car.Cena|number_format(0) }} eur</span>
 								</div>
 							</div>

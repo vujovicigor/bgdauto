@@ -38,15 +38,16 @@ $(document).ready(function() {
         
         
         //Do not include! This prevents the form from submitting for DEMO purposes only!
-        $('form').submit(function(event) {
-            event.preventDefault();
-            return false;
-        })
+        //$('form').submit(function(event) {
+        //    event.preventDefault();
+        //    return false;
+        //})
     });
 
     // Header Type = Fixed
     $(window).on("scroll", function() {
         var window_top = $(window).scrollTop() + 1;
+        $('.site-header')[0].style.visibility = "visible"
         if (window_top > 300) {
             $('.site-header').addClass('scrolled-header animated fadeInDown');
         } else {
