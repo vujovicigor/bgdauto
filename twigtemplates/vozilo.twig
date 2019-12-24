@@ -3,6 +3,7 @@
 {% set Car = fetch("Cars", {id:slug})[0] %}
 {% block description %}{{Car.Marka}} {{Car.Model}} Prodaja Vozila{% endblock %}
 {% block title %}Prodajem {{Car.Marka}} {{Car.Model}}{% endblock %}
+{% block image %}img/{{Car.Galerija_[0].slug}}{% endblock %}
 
 {% block content %}
 
@@ -49,21 +50,21 @@
 					<div class="col-md-6">
 						<div class="car-details">
 							<h4>{{Car.Marka}} {{Car.Model}}</h4>
-							<span>{{ Car.Cena|number_format(0, ',', ' ') }} eur</span>
+							<span>{{ Car.Cena|number_format(0, ',', ' ') }} &euro;</span>
 							<p style="white-space: pre-wrap;">{{Car.Opis}}</p>
 							<div class="container">
 								<div class="row">
 									<ul class="car-info col-md-6">
 										<li><i class="flaticon flaticon-calendar"></i><p>{{ Car.Godiste }}</p></li>
 										<li><i class="flaticon flaticon-speed"></i><p>{{ Car.Karoserija_label }}</p></li>
-										<li><i class="flaticon flaticon-road"></i><p>{{ Car.Kilometraza }} km</p></li>
+										<li><i class="flaticon flaticon-road"></i><p>{{ Car.Kilometraza|number_format(0, ',', ' ') }} km</p></li>
 										<li><i class="flaticon flaticon-fuel"></i><p>{{ Car.Gorivo }}</p></li>
 									</ul>
 									<ul class="car-info col-md-6">
 										<li><i class="flaticon flaticon-art"></i><p>{{ Car.Boja }}</p></li>
 										<li><i class="flaticon flaticon-shift"></i><p>{{ Car.Menjac_label }}</p></li>
-										<li><i class="flaticon flaticon-car"></i><p>{{ Car.Vrata }}</p></li>
-										<li><i class="flaticon flaticon-motor"></i><p>{{ Car.Kubikaza }} cm<sup>3</sup></p></li>
+										<li><i class="flaticon flaticon-car"></i><p>{{ Car.Vrata }} vrata</p></li>
+										<li><i class="flaticon flaticon-motor"></i><p>{{ Car.Kubikaza|number_format(0, ',', ' ') }} cm<sup>3</sup></p></li>
 									</ul>
 								</div>
 							</div>
@@ -115,7 +116,7 @@
 							<div class="sep-section-heading">
 								<h2>Kontakt <em>Informacije</em></h2>
 							</div>
-							<p>Sva vozila u ponudi su iz uvoza. Preson vlasništva...</p>
+							<p>Sva vozila u ponudi su iz uvoza. Prenos vlasništva, registracija...</p>
 							<div class="contact-info">
 								<div class="row">
 									<div class="phone col-md-12 col-sm-6 col-xs-6">

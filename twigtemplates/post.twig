@@ -4,9 +4,9 @@
 {% block description %}{{Post.Description}}{% endblock %}
 {% block title %}{{Post.Title}}{% endblock %}
 {% set url = (_BASE ~ _GET[0] ~ '/' ~ _GET[1] | url_encode) %}
+{% block image %}img/{{Post.Image}}{% endblock %}
 
 {% block content %}
-
 
 	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
 		<div class="container">
