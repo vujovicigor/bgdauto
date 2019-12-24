@@ -7,10 +7,14 @@
   <base href="{{_BASE}}">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{% block description %}{% endblock %}"/>
+  <meta name="description" content="{% block description %}BGD Auto - Šlep služba i prodaja auta{% endblock %}"/>
+  <meta name="twitter:description" content="{{ block('description') }}">
   <meta name="keywords" content="Auto slep beograd prodaja auta {% block keywords %}{% endblock %}">
   <title>BGD Auto - {% block title %}{% endblock %}</title>
+  <meta name="twitter:title" content="BGD Auto - {{ block('title') }}">
   <meta property="og:image" content="{{_BASE}}{% block image %}assets/images/logo_white.png{% endblock %}"/>
+  <meta name="twitter:image" content="{{_BASE}}{{ block('image') }}"/>
+  <meta name="twitter:card" content="summary_large_image">
 
   <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="assets/css/bootstrap.css">
