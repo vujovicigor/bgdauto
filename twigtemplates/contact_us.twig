@@ -1,7 +1,6 @@
 {% extends "base.twig" %}
-{% set slug = _GET['1'] %}
-{% set Post = fetch("Post", {id:slug})[0] %}
-{% block description %}{{Post.Description}}{% endblock %}
+{% set Site = fetch("Site") %}
+{% block description %}Tel: {{Site.Telefon}}, Adresa: {{Site.Adresa}} {% endblock %}
 {% block content %}
 
 	<div class="page-heading wow fadeIn" data-wow-duration="0.5s">
@@ -11,8 +10,8 @@
 					<div class="heading-content-bg wow fadeIn" data-wow-delay="0.75s" data-wow-duration="1s">
 						<div class="row">
 							<div class="heading-content col-md-12">
-								<p><a href="index.html">Homepage</a> / <em> Contact Us</em></p>
-								<h2>Contact <em>Us</em></h2>
+								<p><a href="index">Home</a> </p>
+								<h2> <em>Kontakt</em></h2>
 							</div>
 						</div>
 					</div>
@@ -23,7 +22,7 @@
 
 	<div class="contact-us wow fadeIn" data-wow-delay="0.5s" data-wow-duration="1s">
 <!--		<div id="map"></div> -->
-    <iframe id="map" width="98%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q=MIRKA+SANDIĆA+10%2C+BEOGRAD&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
+    <iframe id="map" width="98%" height="100%" id="gmap_canvas" src="https://maps.google.com/maps?q={{Site.Adresa}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0">
 		</iframe>    
 	</div>
 
@@ -34,29 +33,29 @@
 					<div class="col-md-8">
 						<div class="send-message">
 							<div class="sep-section-heading">
-								<h2>Send Us <em>Message</em></h2>
+								<h2>Pišite <em>nam</em></h2>
 							</div>
 							<form id="contact_form" action="contact_us.html#" method="POST" enctype="multipart/form-data">
 								<div class="row">
 									<div class=" col-md-4 col-sm-4 col-xs-6">
-										<input type="text" class="blog-search-field" name="s" placeholder="Your name..." value="">
+										<input type="text" class="blog-search-field" name="s" placeholder="Vaše ime..." value="">
 									</div>
 									<div class="col-md-4 col-sm-4 col-xs-6">
-										<input type="text" class="blog-search-field" name="s" placeholder="Your email..." value="">
+										<input type="text" class="blog-search-field" name="s" placeholder="Vaš email..." value="">
 									</div>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text" class="subject" name="s" placeholder="Subject..." value="">
+										<input type="text" class="subject" name="s" placeholder="Tema..." value="">
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-md-12 col-sm-12">
-										<textarea id="message" class="input" name="message" placeholder="Message..."></textarea>
+										<textarea id="message" class="input" name="message" placeholder="Poruka..."></textarea>
 									</div>
 								</div>
 								<div class="row">
 									<div class="submit-coment col-md-12">
 										<div class="primary-button">
-											<a href="contact_us.html#">Send now <i class="fa fa-paper-plane"></i></a>
+											<a href="contact_us.html#">Pošalji<i class="fa fa-paper-plane"></i></a>
 										</div>
 									</div>
 								</div>
@@ -66,13 +65,13 @@
 					<div class="col-md-4">
 						<div class="contact-info">
 							<div class="sep-section-heading">
-								<h2>Contact <em>Informations</em></h2>
+								<h2>Kontakt <em>Informacije</em></h2>
 							</div>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati accusamus a iure nulla, sed non ex nobis eius esse distinctio imps sunt quia sint quis quisquam odio repellat.</p>
+							<p>{{Site.KontaktTxt}}</p>
 							<div class="info-list">
 								<ul>
-									<li><i class="fa fa-phone"></i><span>+1 123 489-5748</span></li>
-									<li><i class="fa fa-envelope"></i><span>youremail@gmail.com</span></li>
+									<li><a href="tel: {{Site.Telefon}}"><i class="fa fa-phone"></i><span>{{Site.Telefon}}</span></a></li>
+									<li><a href="mailto: {{Site.email}}"><i class="fa fa-envelope"></i><span>{{Site.email}}</span></a></li>
 								</ul>
 							</div>
 						</div>

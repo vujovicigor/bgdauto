@@ -246,6 +246,58 @@ Pored autošlep vozila sa silazećom platformom i hidrauličnim čekrkom za auto
 
 
 	<section>
+		<div class="latest-news">
+			<div class="container">
+				<div class="latest-news-content">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="section-heading">
+								<div class="icon">
+									<i class="fa fa-file"></i>
+								</div>
+								<div class="text-content">
+									<h2>Novosti</h2>
+									<span>iz autošlep industrije</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container">
+				<div class="row">
+        {% set Posts = fetch("Post") %}
+        {% for Post in Posts %}
+					<div class="col-md-4">
+						<div class="item wow fadeIn" data-wow-duration="0.75s">
+					 		<div class="thumb-content">
+								<div class="date-post">
+									<a href="post/{{Post.Slug}}">{{Post.Date|date("m.d.Y")}}</a>
+								</div>
+								<div class="thumb-inner">
+									<a href="post/{{Post.Slug}}"><img src="img/{{Post.Image}}" alt="{{Post.Title}}"></a>
+								</div>
+							</div>
+							<div class="down-content">
+								<a href="single_car.html"><h4>{{Post.Title}}</h4></a>
+								{#<span>Posted by: <em>Admin</em></span> #}
+								<p>{{Post.Short}}</p>	
+								<div class="text-button">
+									<a href="post/{{Post.Slug}}">Nastavak <i class="fa fa-arrow-right"></i></a>
+								</div>							
+							</div>
+					  	</div>
+					</div>
+          {% endfor %}
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+	<section>
 		<div class="recent-cars">
 			<div class="container">
 				<div class="recent-car-content">
@@ -256,7 +308,7 @@ Pored autošlep vozila sa silazećom platformom i hidrauličnim čekrkom za auto
 									<i class="fa fa-car"></i>
 								</div>
 								<div class="text-content">
-									<h2>Najanovija vozila</h2>
+									<h2>Najnovija vozila</h2>
 									<span>u ponudi</span>
 								</div>
 							</div>
@@ -297,7 +349,7 @@ Pored autošlep vozila sa silazećom platformom i hidrauličnim čekrkom za auto
 		</div>
 	</section>
 
-
+{#
 	<section>
 		<div class="testimonials">
 			<div class="container">						 
@@ -425,95 +477,6 @@ Pored autošlep vozila sa silazećom platformom i hidrauličnim čekrkom za auto
 			</div>
 		</div>
 	</section>
-
-
-	<section>
-		<div class="latest-news">
-			<div class="container">
-				<div class="latest-news-content">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="section-heading">
-								<div class="icon">
-									<i class="fa fa-file"></i>
-								</div>
-								<div class="text-content">
-									<h2>Latest News</h2>
-									<span>Here are our latest posts</span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-4">
-						<div class="item wow fadeIn" data-wow-duration="0.75s">
-					 		<div class="thumb-content">
-								<div class="date-post">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html">14 January</a>
-								</div>
-								<div class="thumb-inner">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html"><img src="assets/images/blog_grid_01.jpg" alt=""></a>
-								</div>
-							</div>
-							<div class="down-content">
-								<a href="single_car.html"><h4>Pabst Gastropub Synth Edge</h4></a>
-								<span>Posted by: <em>Admin</em></span>
-								<p>Next level Pinterest farm-to-table selvage gentrify street raw denim helvetica street art pork.</p>	
-								<div class="text-button">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html">Continue Reading <i class="fa fa-arrow-right"></i></a>
-								</div>							
-							</div>
-					  	</div>
-					</div>
-					<div class="col-md-4">
-						<div class="item wow fadeIn" data-wow-duration="0.75s">
-					 		<div class="thumb-content">
-								<div class="date-post">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html">12 January</a>
-								</div>
-								<div class="thumb-inner">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html"><img src="assets/images/blog_grid_02.jpg" alt=""></a>
-								</div>
-							</div>
-							<div class="down-content">
-								<a href="single_car.html"><h4>Hammock Echo Park Braid</h4></a>
-								<span>Posted by: <em>Admin</em></span>
-								<p>Next level Pinterest farm-to-table selvage gentrify street raw denim helvetica street art pork.</p>
-								<div class="text-button">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html">Continue Reading <i class="fa fa-arrow-right"></i></a>
-								</div>								
-							</div>
-					  	</div>
-					</div>
-					<div class="col-md-4">
-						<div class="item wow fadeIn" data-wow-duration="0.75s">
-					 		<div class="thumb-content">
-								<div class="date-post">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html">9 January</a>
-								</div>
-								<div class="thumb-inner">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html"><img src="assets/images/blog_grid_03.jpg" alt=""></a>
-								</div>
-							</div>
-							<div class="down-content">
-								<a href="single_car.html"><h4>Waistcoat Wayfarers Selfies</h4></a>
-								<span>Posted by: <em>Admin</em></span>
-								<p>Next level Pinterest farm-to-table selvage gentrify street raw denim helvetica street art pork.</p>
-								<div class="text-button">
-									<a href="http://cocotemplates.com/html/acropos/single-post.html">Continue Reading <i class="fa fa-arrow-right"></i></a>
-								</div>								
-							</div>
-					  	</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-
-
-
+#}
 
 {% endblock %}

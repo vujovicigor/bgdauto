@@ -1,3 +1,4 @@
+{% set Site = fetch("Site") %}
 <!DOCTYPE html>
 <!--[if IE 9]>
 <html class="ie ie9" lang="en-US">
@@ -160,10 +161,10 @@
 				<div class="col-md-4">
 					<div class="footer-item">
 						<div class="what-offer">
-							<h2>What We Offer ?</h2>
+							<h2>Čime se bavimo</h2>
 							<ul>
-								<li><a href="index">Rent a car now</a></li>
-								<li><a href="index">Search for sale</a></li>
+								<li><a href="post/pomoc-na-putu">Prodaja vozila</a></li>
+								<li><a href="post/pomoc-na-putu">AutoŠlep vozila</a></li>
 							</ul>
 						</div>
 					</div>
@@ -171,16 +172,16 @@
 				<div class="col-md-4">
 					<div class="footer-item">
 						<div class="need-help">
-							<h2>Kontaktirate nas</h2>            
+							<h2>Kontakt</h2>            
 							<ul>
 								<li>
                   <a href="tel:+381645454999">
-                    <i class="fa fa-phone"></i> <span> +381 64 54 54 999</span>
+                    <i class="fa fa-phone"></i> <span> {{Site.Telefon}}</span>
                   </a>
                 </li>
 								<li>
                   <a href="mailto:youremail@gmail.com">
-									  <i class="fa fa-envelope"></i> <span> youremail@gmail.com</span>
+									  <i class="fa fa-envelope"></i> <span> {{Site.email}}</span>
                   </a>                
                 </li>
 							</ul>
@@ -215,7 +216,7 @@
         #}
 				<div class="col-md-12">
 					<div class="sub-footer">
-						<p>Copyright 2019. All rights reserved by: <a href="index">BGD Auto</a></p>
+						<p>Copyright 2020. All rights reserved by <a href="index">BGD Auto</a></p>
 					</div>
 				</div>
 			</div>
@@ -242,7 +243,22 @@
 
 	<!-- Custom Js -->
   <script src="assets/js/custom.js"></script>
+
+  <script>
+    var mysitechatsupportStyle = `
+    .discussion {
+      background-image: none !important;
+      background-color: whitesmoke;
+    }
+    .top-bar {
+      background-color: #f4c23d;
+      color:black;    
+    }
+    `
+  </script>
+  <script src="https://mysitechatsupport.com/chatplugin.js" data-id="b9dsS8BhL3YRQjRhYEP04g=="></script>
   
   {% block lastscript %}{% endblock %}
+
 </body>
 </html>
