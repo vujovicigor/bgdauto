@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 2,
+  "dockerfileLines" :[
+                         "FROM php:7.2-apache",
+                         "COPY . /var/www/html",
+                         "RUN a2enmod rewrite && service apache2 restart && chown -R www-data:www-data /var/www/html/cms/twigcache",
+                         "EXPOSE 80"
+                     ]
+ }
