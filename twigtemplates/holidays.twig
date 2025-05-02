@@ -2,10 +2,11 @@
 {% set country = _GET[1]%}
 {% set search = _GET['search']%}
 {% set holidays = fetch2('https://daysapi.com/api/v2/public_holidays_v4/'~country~'/2025', {'public':true, 'search':search}) %}
+{% set _ = executeScript('window.history.pushState({}, "", "/holidays/'~country~'");') %}
 
 {% block content %}
 {% if _ISDATASTAR %}
-<main class="container-fluid" id="app" data-replace-url="`/holidays/{{country}}`">
+<main class="container-fluid" id="app">
 {% endif %}
 {#    ok, {{country}}, _ISDATASTAR = {{_ISDATASTAR}} 
 

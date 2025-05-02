@@ -34,10 +34,16 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent" >
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)" data-on-click="@get('/holidays/rs'); bsCollapseToggle()" >RS holidays</a>
+            <a class="nav-link" href="/holidays/rs)" data-on-click__prevent="@get('/holidays/rs'); bsCollapseToggle()" >RS holidays</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void(0)" data-on-click="@get('/holidays/de'); bsCollapseToggle()" >DE holidays</a>
+            <a class="nav-link" href="/holidays/de" data-on-click__prevent="@get('/holidays/de'); bsCollapseToggle()" >DE holidays</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/holidays/fr" data-on-click__prevent="@get('/holidays/fr'); bsCollapseToggle()" >FR holidays</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/holidays/pl" data-on-click__prevent="@get('/holidays/pl'); bsCollapseToggle()" >PL holidays</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/users">Users</a>
@@ -85,6 +91,10 @@
         new bootstrap.Collapse(menuToggle).hide();
         //bsCollapse.close();
     };
+
+    window.addEventListener("popstate", function(e){
+      location.reload();
+    });
     
     /*
     navLinks.forEach((l) => {

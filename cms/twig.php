@@ -118,6 +118,7 @@ $twig->addFunction($je);
 
 $signals = null;
 $selector = null;
+$executeScript = null;
 
 $d2 = new \Twig\TwigFunction('mergeSignals', function ($var=null) {
     //$sse->mergeSignals($var);
@@ -134,6 +135,16 @@ $s2 = new \Twig\TwigFunction('selector', function ($var=null) {
     return;
 });
 $twig->addFunction($s2);
+
+$s3 = new \Twig\TwigFunction('executeScript', function ($var=null) {
+    //$sse->mergeSignals($var);
+    global $executeScript;
+    $executeScript = $var;
+    return;
+});
+$twig->addFunction($s3);
+
+//$sse->executeScript('console.log("Hello, world!")');
 
 /* transform /filename/param1/param2/... to ['filename', 'param1', 'param2'] and assign it to $_GET */
 //print_r($_SERVER);
@@ -187,6 +198,7 @@ if ($isDataStar ){
         'useViewTransition' => true,
     ]);
     if (isset($signals)) $sse->mergeSignals($signals);
+    if (isset($executeScript)) $sse->executeScript($executeScript);
 }
 else {
     echo $twig->render($templatename);
