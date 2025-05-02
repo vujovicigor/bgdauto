@@ -172,6 +172,8 @@ $twig->addGlobal('_SIGNALS', $in_signals);
 $twig->addGlobal('_ISDATASTAR', isset(getallheaders()['Datastar-Request'])?true:false);
 
 
+print_r( getallheaders());
+
 $templatename = isset($_GET['twig_file_name'])?$_GET['twig_file_name'].'.twig':'index.twig'; // from fs
 if ( !file_exists($TwigTemplatesDir.'/'.$templatename) ) {
     http_response_code(404);
