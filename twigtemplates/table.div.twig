@@ -1,0 +1,47 @@
+
+
+{% if _GET['1'] %}
+
+    {% set cols = fetch('_engine_schema_column', {'table_name':_GET['1']} )%}
+    {% set table = fetch('_engine_schema', {'tablename':_GET['1']} )%}
+    
+    {% set tablename = table[0].name %}
+    {% set is_multiple = table[0].is_multiple %}
+    
+    
+    {% set rows = (is_multiple=='false') ? [ fetch( tablename ) ] : fetch( tablename ) %}
+
+
+<h2>{{tablename}}</h2>
+    <table>
+    <thead>
+    <tr>
+    {% for i in cols %}
+        <th>
+            {{i.field_name}}<br>({{i.nice_name}})
+        </th>
+    {% endfor %}
+
+    <tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+    <tr>
+        {% for i in cols %}
+        <td>
+        {% if i.compType == 'HTMLEDIT' %}
+            {{r[i.field_name] | raw}}
+        {% elseif i.compType == 'IMAGE' %}
+             <img src="/img/{{r[i.field_name][0].slug}}" >
+            
+        {% else %}
+            {{r[i.field_name]}}
+        {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+{% endif %}
+

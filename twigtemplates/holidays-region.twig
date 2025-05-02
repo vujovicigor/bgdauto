@@ -1,0 +1,70 @@
+{% extends _ISDATASTAR ? "base_blank.twig" : "base_ds.twig" %}
+{% set country = _GET[1]%}
+{% set region = _GET[2]%}
+{% set search = _GET['search']%}
+{% set holidays = fetch2('https://daysapi.com/api/v2/public_holidays_v4/'~country~'/2025', {'public':true, 'search':search}) %}
+
+{% block content %}
+{% if _ISDATASTAR %}
+<main class="container-fluid" id="app" data-replace-url="`/holidays-region/{{country}}/{{region}}`">
+{% endif %}
+{#    ok, {{country}}, _ISDATASTAR = {{_ISDATASTAR}} 
+
+<pre>
+{{json_encode(holidays)}}
+</pre>
+#}
+
+<h2>
+Regional public holidays and school holidays in {{holidays.country.name}}
+</h2>
+<p>
+Overview of public, church and national holidays in all German states with school holidays and bridging days. 
+For national holidays and school holidays there are also individual overviews by holiday type and for the entire country.
+</p>
+<p>
+{% for sd in holidays.country.subdivisions %} 
+    {# <a href="/holidays/{{holidays.country.code}}/{{sd.name}}">{{sd.name}}</a> #}
+    
+    <a href="javascript:void(0)" data-on-click="@get('/holidays/{{holidays.country.code}}/{{sd.name}}')">{{sd.name}}</a> 
+    
+    {#<button type="button" class="btn btn-secondary" data-on-click="@get('/holidays/{{holidays.country.code}}/{{sd.name}}')">
+        {{sd.name}}
+    </button>#}
+{% endfor %}
+</p>
+
+<div>
+
+
+    <table class="table table-striped table-hover">
+    <thead style="position: sticky; top: 0;">
+        <tr>
+        <th scope="col">Public holiday name</th>
+        <th scope="col">Date</th>
+        <th scope="col" style="width:100%">States</th>
+        </tr>
+    </thead>
+    <tbody data-signals="{userid:null}">
+        {% for h in holidays.rows %}
+       <tr >        
+            <th scope="row" style="white-space: nowrap">
+                {{h.name}}<br>
+                <small>({{h.localname}})</small</th>
+            <td style="white-space: nowrap" >{{h.date | date("d. M. Y.")}} <br> ({{h.weekday.date.name}})</td>
+            <td >{{h.subdivisions|join(", ", " and ")|default('(All)')}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+{% if _ISDATASTAR %}
+</main>
+{% endif %}
+{% endblock %}

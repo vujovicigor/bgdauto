@@ -1,0 +1,107 @@
+{% extends "base_ds.twig" %}
+{% block content %}
+{% set code = _GET['1'] %}
+{% set year = _GET['2'] %}
+{# set url = "https://daysapi.com/api/v2/public_calendar_obs_v4?code=" ~ code ~ '&year=' ~ year #}
+{% set url = "https://daysapi.com/api/v2/public_calendar_obs_v4" %}
+url: {{url}}
+{% set months = fetch2(url, {'code':code, 'year':year}) %}
+
+{#
+m, weeks:[
+  {
+    "m": 1,
+    "wn": 1,
+    "week": [
+      {
+        "dt": "2024-01-01",
+        "d": 1,
+        "m": 1,
+        "y": 2024,
+        "dow_int": 0,
+        "dow_str": "Monday",
+        "wn": 1
+      },
+xs,sm,m,lg,xl
+#}
+
+<div class="row" style="overflow: auto;">    
+    {% for month in months %}
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-4" >
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">{{month.m_str}}</h5>
+                    <table class="table table-borderless table-sm">
+                    <thead>
+                        <tr class="table-secondary text-muted". style="font-weight: lighter;">
+                            <td scope="col" title="Week number"></td>
+                            <td scope="col" title="Monday">M</td>
+                            <td scope="col" title="Tuesday">T</td>
+                            <td scope="col" title="Wednesday">W</td>
+                            <td scope="col" title="Thursday">T</td>
+                            <td scope="col" title="Friday">F</td>
+                            <td scope="col" title="Saturday">S</td>
+                            <td scope="col" title="Sunday">S</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    
+                        {% for weekz in month.weeks %}
+                    {#{weekz | json_encode(constant('JSON_PRETTY_PRINT'))}#}
+                        <tr>
+                            <th class="table-secondary" style="font-weight: lighter;">{{weekz.wn}}.</th>
+                            {% for day in weekz.week %}
+                            <td class="{% if day.public is not null %} holiday-{{day.public?'public':'notpublic'}} {%endif%}dow-{{day.dow_int}}" >
+                                {{day.d}}
+                                <div class="tooltip max no-space">
+                                    {% for holiday in day.days %}
+                                        <div>{{holiday.name}} 
+                                          <span class="badge rounded-pill bg-{{holiday.public?"danger":"secondary"}}">
+                                          {{holiday.public?"Public":"Non-public"}}
+                                          </span>
+                                          <span class="badge rounded-pill">
+                                          {{holiday.subdivisions|join(", ", " and ")}}
+                                          </span>
+                                          
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            
+                            {% endfor %} 
+                        </tr>
+                        {% endfor %} 
+
+                    </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>     
+    {% endfor %} 
+</div> 
+<style>
+.holiday-public {
+   box-shadow: rgb(255, 0, 0) 0px -4px 0px 0px inset !important;
+}
+.holiday-notpublic {
+   box-shadow: rgb(10, 10, 10) 0px -4px 0px 0px inset !important;
+}
+td:hover {
+   background-color: lightgray;
+   transition: background-color 300ms linear;
+}
+td {
+   transition: background-color 700ms linear;
+}
+td.dow-7 {
+    color:red;
+}
+.tt-align-left {
+    text-align: left !important;
+}
+.tooltip-inner {
+    text-align: left !important;
+    max-width: 413px !important;
+}
+</style>
+{% endblock %}

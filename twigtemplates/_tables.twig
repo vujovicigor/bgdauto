@@ -5,7 +5,7 @@
 {% set tabele = fetch('select * from _table')%}
 
 {% for i in tabele %}
-    <tag style="background-color:{{(_GET['id']==i.name)?'#fd0':''}}"><p><a href="table?id={{i.name}}"> {{i.name}} ({{i.nice_name}})</a></p></tag>
+    <tag style="background-color:{{(_GET['id']==i.name)?'#fd0':''}}"><p><a href="_table?id={{i.name}}"> {{i.name}} ({{i.nice_name}})</a></p></tag>
 {% endfor %}
 
 

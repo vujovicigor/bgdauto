@@ -1,0 +1,24 @@
+{% extends "base_ds.twig" %}
+{% block content %}
+
+
+{% set _SIGNALS = {'skip':0, 'limit':10, 'userid':null}%}
+
+  <div data-signals="{{json_encode(_SIGNALS)}}">
+  <button data-on-click="@get('users.table')" 
+          data-on-signal-change-skip="@get('users.table')" 
+          data-indicator="fetching" 
+          data-on-signal-change-fetching="console.log('indicator changed2:', $fetching)"
+          >Next</button>
+
+
+
+  Limit: <input type="number" data-bind="$limit"  >
+  Skip:Skip:Skip:Skip: <input type="number" data-bind="$skip" min="0" max="100" step="1"  data-attr-disabled="$fetching">
+ {# <div data-show="$fetching">Loading...</div>#}
+
+{% include('users.table.twig')%}
+
+<div id="users-modal" style="height:40rem"></div>
+
+{% endblock %}

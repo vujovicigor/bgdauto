@@ -1,0 +1,55 @@
+
+<div id="users-modal" data-signals="{showUserModal:true}" >
+{#
+    <div class="modal fade show position-staticDUMMY d-block" tabindex="-1" >
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title, {{_GET['userid']}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" 
+                data-on-click="$showUserModal=false"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <p>Modal body text goes here.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                data-on-click="$showUserModal=false" >Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+#}
+
+
+
+    <div data-replace-url="`/user/{{_SIGNALS['userid']}}`"
+    class="offcanvas offcanvas-start" data-bs-backdrop="static" data-class-show="$showUserModal" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas user {{_SIGNALS['userid']}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
+            data-on-click="$showUserModal=false; @get('users.modal.close')"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+            Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+            </div>
+            <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                Dropdown button
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>    
+

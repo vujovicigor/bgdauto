@@ -1,0 +1,40 @@
+{% set url = "https://api.outpostchess.com/api/v2/users_search_paginated" %}
+{# set users = fetch2(url, _SIGNALS, 'POST') #}
+{% set users = fetch('WITH RECURSIVE
+  cnt(x) AS (
+     SELECT 1
+     UNION ALL
+     SELECT x+1 FROM cnt
+      LIMIT 100
+  )
+SELECT x
+FROM cnt
+order by x limit :limit offset :skip
+', _SIGNALS) %}
+
+<div id="usersTable" style="height:20rem; overflow:auto">
+
+
+    <table class="table table-striped table-hover">
+    <thead style="position: sticky; top: 0;">
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+       {# <tr data-on-click="@get('users.modal?userid={{user.x}}')" > #}
+       <tr data-on-click="$userid={{user.x}}; @get('users.modal')" 
+       data-class-table-active="$userid=={{user.x}}"
+       >        
+            <th scope="row">User {{user.x}}</th>
+            <td>Mark</td>
+            <td>Otto</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+</div>

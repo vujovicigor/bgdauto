@@ -1,0 +1,26 @@
+
+{#
+// {{_GET['twig_file_name']}}
+// {{_GET['id']}}
+//
+#}
+
+{% extends "base_ds.twig" %}
+{% block content %}
+    {% set t = fetch('select * from _table')%}
+
+    <input data-bind-input />
+    <div data-text="$input.toUpperCase()">
+    I will be replaced with the contents of the input signal
+    </div>
+
+    <ul>
+    {% for i in t %}
+        <tag style="background-color:{{(_GET['1']==i.name)?'#fd0':''}}"><p><a href="/table/{{i.name}}"> {{i.name}} ({{i.nice_name}})</a></p></tag>
+    {% endfor %}
+    </ul>
+
+    {% include('table.div.twig')%}
+
+{% endblock %}
+

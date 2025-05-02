@@ -1,5 +1,6 @@
 {
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^3.0",
+        "starfederation/datastar-php": "dev-main"
     }
 }
