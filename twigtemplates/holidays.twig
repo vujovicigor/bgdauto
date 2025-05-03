@@ -21,7 +21,7 @@ For national holidays and school holidays there are also individual overviews by
 {% for sd in holidays.country.subdivisions %} 
     {# <a href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name}}">{{sd.name}}</a>  #}
 
-    <a style="margin: .25rem .125rem;" class="btn btn-primary" href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}" data-on-click__prevent="@get('/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}')">
+    <a style="margin: .25rem .125rem;" class="btn btn-primary btn-sm" href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}" data-on-click__prevent="@get('/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}')">
     {{sd.name}}
     </a> 
 
@@ -38,8 +38,8 @@ For national holidays and school holidays there are also individual overviews by
     <thead style="position: sticky; top: 0;">
         <tr>
         <th scope="col">Public holiday name</th>
-        <th scope="col">Date</th>
-        <th scope="col" style="width:100%">States</th>
+        <th scope="col">Official/observed date</th>
+        <th scope="col" style="width:100%">States/Regions/Muncipialities</th>
         </tr>
     </thead>
     <tbody>
@@ -49,13 +49,21 @@ For national holidays and school holidays there are also individual overviews by
                 <a href="/holiday/{{h.country}}/{{h.name|url_encode}}" data-on-click__prevent="@get('/holiday/{{h.country}}/{{h.name|url_encode}}')">
                 {{h.name}}<br>
                 <small>({{h.localname}})</small</a></th>
-            <td style="white-space: nowrap" >{{h.date | date("d. M. Y.")}} <br> ({{h.weekday.date.name}})</td>
+            <td style="white-space: nowrap" >
+                {{h.date | date("d. M. Y.")}}  
+                ({{h.weekday.date.name}}) 
+                {% if h.date != h.observed %} <br><span style="color:red">
+                    Observed on {{h.observed | date("d. M. Y.")}} </span>
+                {% endif %}
+            </td>
+
             <td>{# {{h.subdivisions|join(", ", " and ")|default('(All)')}} #}
             {% for s in h.subdivisions %}
-                <a style="margin: .25rem .125rem;" class="btn btn-secondary">
+                <a style="margin: .25rem .125rem;" class="btn btn-secondary btn-sm">
                     {{holidays.regionskv.(s)}} ({{s}})
                 </a>
             {% endfor %}
+            {% if h.subdivisions is empty %} (All) {% endif %}
             </td>
         </tr>
         {% endfor %}

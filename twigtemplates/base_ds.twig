@@ -25,9 +25,9 @@
     display: flex;
     flex-flow: column;
 ">
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <nav class="navbar navbar-expand-md bg-body-tertiary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/users">Navbar</a>
+      <!-- <a class="navbar-brand" href="/users">DAYS</a> -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -43,30 +43,37 @@
             <a class="nav-link" href="/holidays/fr" data-on-click__prevent="@get('/holidays/fr'); bsCollapseToggle()" >FR holidays</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/holidays/pl" data-on-click__prevent="@get('/holidays/pl'); bsCollapseToggle()" >PL holidays</a>
+            <a class="nav-link" href="/holidays/es" data-on-click__prevent="@get('/holidays/es'); bsCollapseToggle()" >ES holidays</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/holidays/us" data-on-click__prevent="@get('/holidays/us'); bsCollapseToggle()" >US holidays</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/users">Users</a>
           </li>
+          <!--
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
             </a>
+            
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="/users">Action</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
+            </ul> 
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-          </li>
+          </li> -->
         </ul>
+        <!--
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="find by name or date" aria-label="Search" 
           data-on-input__throttle.300ms.trail="@get('/holidays/'+window.location.pathname.split('/')[2]+'/?search=' + evt.target.value)" >
         </form>
+        -->
       </div>
     </div>
   </nav>
