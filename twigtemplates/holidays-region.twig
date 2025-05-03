@@ -3,10 +3,10 @@
 {% set region = _GET[2]%}
 {% set search = _GET['search']%}
 {% set holidays = fetch2('https://daysapi.com/api/v2/public_holidays_v4/'~country~'/2025', {'public':true, 'search':search}) %}
-
+{% do executeScript('window.history.pushState({}, "", "/holidays-region/'~country~'/'~region~'");') %}
 {% block content %}
 {% if _ISDATASTAR %}
-<main class="container-fluid" id="app" data-replace-url="`/holidays-region/{{country}}/{{region}}`">
+<main class="container-fluid" id="app">
 {% endif %}
 {#    ok, {{country}}, _ISDATASTAR = {{_ISDATASTAR}} 
 
@@ -45,7 +45,7 @@ For national holidays and school holidays there are also individual overviews by
         <th scope="col" style="width:100%">States</th>
         </tr>
     </thead>
-    <tbody data-signals="{userid:null}">
+    <tbody>
         {% for h in holidays.rows %}
        <tr >        
             <th scope="row" style="white-space: nowrap">

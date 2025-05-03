@@ -1,13 +1,14 @@
 {% extends _ISDATASTAR ? "base_blank.twig" : "base_ds.twig" %}
-{% set country = _GET[1]%}
-{% set search = _GET['search']%}
-{% set holidays = fetch2('https://daysapi.com/api/v2/public_holidays_v4/'~country~'/2025', {'public':true, 'search':search}) %}
-{% do executeScript('window.history.pushState({}, "", "/holidays/'~country~'");') %}
+{% set country_code = _GET[1]%}
+{% set holidayName = _GET[2]%}
+{% set holiday = fetch2('https://daysapi.com/api/v2/public_holiday/', {'name':holidayName, 'country_code':country_code}) %}
+{% do executeScript('window.history.pushState({}, "", "holiday/'~country_code~'/'~holidayName~ '");') %}
 
 {% block content %}
 {% if _ISDATASTAR %}<main class="container-fluid" id="app">{% endif %}
 {#    ok, {{country}}, _ISDATASTAR = {{_ISDATASTAR}} 
 #}
+
 
 <h2>
 Public holidays and school holidays in {{holidays.country.name}}
@@ -21,9 +22,7 @@ For national holidays and school holidays there are also individual overviews by
 {% for sd in holidays.country.subdivisions %} 
     {# <a href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name}}">{{sd.name}}</a>  #}
 
-    <a style="margin: .25rem .125rem;" class="btn btn-primary" href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}" data-on-click__prevent="@get('/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}')">
-    {{sd.name}}
-    </a> 
+    <a style="margin: .25rem .125rem;" class="btn btn-secondary" href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name}}" data-on-click__prevent="@get('/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name}}')">{{sd.name}}</a> 
 
 {% endfor %}
 </p>
@@ -46,17 +45,11 @@ For national holidays and school holidays there are also individual overviews by
         {% for h in holidays.rows %}
        <tr >        
             <th scope="row" style="white-space: nowrap">
-                <a href="/holiday/{{h.country}}/{{h.name|url_encode}}" data-on-click__prevent="@get('/holiday/{{h.country}}/{{h.name|url_encode}}')">
-                {{h.name}}<br>
-                <small>({{h.localname}})</small</a></th>
+                <a href="/holiday/{{h.country}}/{{h.localname}}" data-on-click__prevent="@get('/holiday/{{h.country}}/{{h.localname}}')">
+                    {{h.name}}<br>
+                    <small>({{h.localname}})</small</a></th>
             <td style="white-space: nowrap" >{{h.date | date("d. M. Y.")}} <br> ({{h.weekday.date.name}})</td>
-            <td>{# {{h.subdivisions|join(", ", " and ")|default('(All)')}} #}
-            {% for s in h.subdivisions %}
-                <a style="margin: .25rem .125rem;" class="btn btn-secondary">
-                    {{holidays.regionskv.(s)}} ({{s}})
-                </a>
-            {% endfor %}
-            </td>
+            <td >{{h.subdivisions|join(", ", " and ")|default('(All)')}}</td>
         </tr>
         {% endfor %}
     </tbody>
@@ -66,7 +59,7 @@ For national holidays and school holidays there are also individual overviews by
 
 
 <pre>
-{{json_encode(holidays)}}
+{{json_encode(holiday)}}
 </pre>
 
 

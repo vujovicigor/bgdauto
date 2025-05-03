@@ -64,7 +64,8 @@
           </li>
         </ul>
         <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="find by name or date" aria-label="Search" data-on-input__throttle.300ms.trail="@get('/holidays/de/?search=' + evt.target.value)" >
+          <input class="form-control me-2" type="search" placeholder="find by name or date" aria-label="Search" 
+          data-on-input__throttle.300ms.trail="@get('/holidays/'+window.location.pathname.split('/')[2]+'/?search=' + evt.target.value)" >
         </form>
       </div>
     </div>

@@ -1,4 +1,5 @@
 
+{% do executeScript('window.history.pushState({}, "", "/user/'~ _SIGNALS['userid'] ~'");') %}
 <div id="users-modal" data-signals="{showUserModal:true}" >
 {#
     <div class="modal fade show position-staticDUMMY d-block" tabindex="-1" >
@@ -25,8 +26,7 @@
 
 
 
-    <div data-replace-url="`/user/{{_SIGNALS['userid']}}`"
-    class="offcanvas offcanvas-start" data-bs-backdrop="static" data-class-show="$showUserModal" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" data-bs-backdrop="static" data-class-show="$showUserModal" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas user {{_SIGNALS['userid']}}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"
