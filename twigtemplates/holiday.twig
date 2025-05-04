@@ -2,7 +2,8 @@
 {% set country_code = _GET[1]%}
 {% set holidayName = _GET[2]%}
 {% set holiday = fetch2('https://daysapi.com/api/v2/public_holiday/', {'name':holidayName, 'country_code':country_code}) %}
-{% do executeScript('window.history.pushState({}, "", "holiday/'~country_code~'/'~holidayName~ '");') %}
+{% set url = '/holiday/'~country_code~'/'~holidayName | url_encode %}
+{% do executeScript('if (document.location.pathname != "'~url~'") window.history.pushState({}, "", "'~url~'");') %}
 
 {% block content %}
 {% if _ISDATASTAR %}<main class="container-fluid" id="app">{% endif %}

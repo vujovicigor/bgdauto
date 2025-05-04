@@ -2,7 +2,10 @@
 {% set country = _GET[1]%}
 {% set search = _GET['search']%}
 {% set holidays = fetch2('https://daysapi.com/api/v2/public_holidays_v4/'~country~'/2025', {'public':true, 'search':search}) %}
-{% do executeScript('window.history.pushState({}, "", "/holidays/'~country~'");') %}
+
+{% set url = '/holidays/'~(country | url_encode) %}
+{% do executeScript('if (document.location.pathname != "'~url~'") window.history.pushState({}, "", "'~url~'");') %}
+
 
 {% block content %}
 {% if _ISDATASTAR %}<main class="container-fluid" id="app">{% endif %}
@@ -21,7 +24,7 @@ For national holidays and school holidays there are also individual overviews by
 {% for sd in holidays.country.subdivisions %} 
     {# <a href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name}}">{{sd.name}}</a>  #}
 
-    <a style="margin: .25rem .125rem;" class="btn btn-primary btn-sm" href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}" data-on-click__prevent="@get('/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}')">
+    <a class="btn btn-link btn-sm" href="/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}" data-on-click__prevent="@get('/holidays-region/{{holidays.country.code}}/{{sd.code}}/{{sd.name|url_encode}}')">
     {{sd.name}}
     </a> 
 
