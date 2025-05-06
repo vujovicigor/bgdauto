@@ -6,7 +6,7 @@
 {% do executeScript('if (document.location.pathname != "'~url~'") window.history.pushState({}, "", "'~url~'");') %}
 
 {% block content %}
-{% if _ISDATASTAR %}<main class="container-fluid" id="app">{% endif %}
+{% if _ISDATASTAR %}<main class="container" id="app">{% endif %}
 {#    ok, {{country}}, _ISDATASTAR = {{_ISDATASTAR}} 
 #}
 
